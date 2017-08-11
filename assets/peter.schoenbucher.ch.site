@@ -1,0 +1,31 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+    root /home/web/hosts/peter.schoenbucher.ch/htdocs;
+    index index.html index.php;
+
+    # Make site accessible from http://localhost/
+    server_name localhost;
+
+    location / {
+        try_files $uri $uri/ /index.php;
+    }
+
+    # In apache it was /pmwiki_neu/ /home/web/pmwiki-2.2.102/
+    # which was not used anywhere
+    # location /cgi-bin/ {
+    #  proxy_pass http://default_server:apache_port
+    #}
+
+    location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        # NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
+
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_index index.php;
+        include fastcgi_params;
+    }
+
+}
