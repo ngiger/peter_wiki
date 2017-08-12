@@ -27,6 +27,10 @@ ADD assets/peter.schoenbucher.ch.conf /etc/apache2/sites-available/default
 #  	&& ln -sf /dev/stderr /var/log/apache2/error.log \
 #    	&& chown www-data  /var/log/apache2/access.log  /var/log/apache2/error.log 
 
+CMD ln -sf /dev/stdout /var/log/apache2/access.log \
+	&& ln -sf /dev/stderr /var/log/apache2/error.log
+
+ADD htpasswd /etc/apache2/htpasswd
 # CMD service php5-fpm start && nginx
 CMD whoami && /etc/init.d/apache2 start && sleep 1000000
 
