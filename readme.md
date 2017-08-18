@@ -6,9 +6,7 @@ Kriterien:
     das gibt es erst seit http://php.net/manual/en/migration55.deprecated.php)
 * NGINX
 
-Gefunden
-
-## https://hub.docker.com/r/ishakuta/docker-nginx-php5/
+Gefunden https://hub.docker.com/r/ishakuta/docker-nginx-php5/
 
 * Vorbereitungen
 
@@ -52,7 +50,7 @@ Mit Docker-Compose
     docker-compose create --build peter_wiki
     docker-compose start peter_wiki
 
-## NIGINX /etc/init/php5-fpm.conf
+* Versuch mit NGINX /etc/init/php5-fpm.conf
 
 Vergebliche Versuche mein Modul zum Laufen zu bringen
 
@@ -100,12 +98,12 @@ http://prxserver:6543/pmwiki/index.php/Public/Cams?from=Main.HomePage
     mkdir /opt/src
     cp /root/.ssh/authorized_keys /home/niklaus/.ssh
     chown -R niklaus:niklaus /home/niklaus/.ssh /opt/src
-    # Jetzt kann Niklaus via ssh einloggen in sein unprivilegiertes Konto
+    // Jetzt kann Niklaus via ssh einloggen in sein unprivilegiertes Konto
     adduser sbu docker
     adduser niklaus docker
-    # Zuerst versuchte ich Namen mit vorgestelltem 'test_' zu erzeugen. Dies hatte letsencrypt nicht gerne (dn4pro hatte keine Propbleme damit. Deshalb auf test als Prefix umgeschaltet
+    // Zuerst versuchte ich Namen mit vorgestelltem 'test_' zu erzeugen. Dies hatte letsencrypt nicht gerne (dn4pro hatte keine Propbleme damit. Deshalb auf test als Prefix umgeschaltet
     letsencrypt certonly # niklaus.giger@hispeed.ch, Folgendd Domainnamen eingegeben testwww.schoenbucher.ch testpeter.schoenbucher.ch test.iatrix.org testwww.iatrix.org
-    # Congratulations! Your certificate and chain have been saved at /etc/letsencrypt/live/testwww.schoenbucher.ch/fullchain.pem.  Your cert will expire on 2017-11-16. 
+    // Congratulations! Your certificate and chain have been saved at /etc/letsencrypt/live/testwww.schoenbucher.ch/fullchain.pem.  Your cert will expire on 2017-11-16. 
 
 
 * Als Benutzer niklaus folgendes gemacht
@@ -127,12 +125,12 @@ http://prxserver:6543/pmwiki/index.php/Public/Cams?from=Main.HomePage
     scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki_old/pmwiki-groups htdocs
     scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki_old/uploads htdocs
     scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki_old/wiki.d htdocs
-      # scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/local htdocs
+    // scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/local htdocs
     cd /opt/src/peter-wiki-docker
     docker-compose up --build peter_wiki
     http://94.130.75.222:6543 # Probleme da auf https umgeleitet und Zertifikat Fehler
-    # letsencrpy certonly geholt. Danach zeigte es die htdocs ohne 
-    # Zur Fehlersuche
+    // letsencrpy certonly geholt. Danach zeigte es die htdocs ohne 
+    // Zur Fehlersuche
     docker-compose exec peter_wiki /bin/bash # dort drin tail -f /var/log/apache2/*log
     wget http://www.pmwiki.org/pub/pmwiki/pmwiki-2.2.70.tgz
     tar -zxvf pmwiki-2.2.70.tgz
@@ -143,8 +141,11 @@ Diverse kleine Änderungen gemacht (skin-Dateien, Dockerfile, docker-compose). D
 
 ### Diverse Wiki-Seiten nach Docker-Instanzen umleiten
 
+    // assets/peter.schoenbucher.ch.conf um mehr ServerAlias erweitert
+    docker-compose up --build peter_wiki
     sudo cp /opt/src/peter-wiki-docker/rewrite_wikis.conf /etc/apache2/sites-available/
     cd /etc/apache2/sites-enabled/
     sudo ln -s ../sites-available/rewrite_wikis.conf .
     sudo a2enmod proxy
     sudo systemctl restart apache2
+    // Auf dns4pro peter.schoenbucher auf den Hetzner-Server weiter geleitet
