@@ -140,3 +140,11 @@ http://prxserver:6543/pmwiki/index.php/Public/Cams?from=Main.HomePage
     sudo chgrp -R www-data htdocs/wiki.d/ # Jetzt kommt
 
 Diverse kleine Änderungen gemacht (skin-Dateien, Dockerfile, docker-compose). Details gemäss git log
+
+### Diverse Wiki-Seiten nach Docker-Instanzen umleiten
+
+    sudo cp /opt/src/peter-wiki-docker/rewrite_wikis.conf /etc/apache2/sites-available/
+    cd /etc/apache2/sites-enabled/
+    sudo ln -s ../sites-available/rewrite_wikis.conf .
+    sudo a2enmod proxy
+    sudo systemctl restart apache2
