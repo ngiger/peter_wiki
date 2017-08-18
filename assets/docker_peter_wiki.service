@@ -1,0 +1,17 @@
+[Unit]
+Description=Daemon for Peters privates wiki unter https://peter.schoenbucher.ch
+After=network.target docker.service 
+Wants=
+Requires=docker.service
+
+[Service]
+Type=simple
+Restart=on-failure
+StartLimitInterval=20
+StartLimitBurst=5
+TimeoutStartSec=0
+WorkingDirectory=/opt/src/peter-wiki-docker
+ExecStart=/usr/bin/docker-compose -f /opt/src/peter-wiki-docker/docker-compose.yml up peter_wiki
+ExecStop=-/usr/bin/docker-compose -f /opt/src/peter-wiki-docker/docker-compose.yml down peter_wiki
+[Install]
+WantedBy=multi-user.target

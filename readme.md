@@ -149,3 +149,8 @@ Diverse kleine Änderungen gemacht (skin-Dateien, Dockerfile, docker-compose). D
     sudo a2enmod proxy
     sudo systemctl restart apache2
     // Auf dns4pro peter.schoenbucher auf den Hetzner-Server weiter geleitet
+    sudo cp /opt/src/peter-wiki-docker/assets/docker_peter_wiki.service  /etc/systemd/system/
+    sudo systemctl daemon-reload 
+    sudo systemctl enable docker_peter_wiki
+    sudo systemctl start docker_peter_wiki
+    sudo systemctl status docker_peter_wiki
