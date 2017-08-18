@@ -17,10 +17,12 @@ services:
       public:
     ports:
       - 6543:80
+#      - 80:80 # dann geht nextcloud nicht mehr!
     volumes:
       # - /opt/src/peter-wiki-docker/htdocs:/var/www # fuer phpinfo.php
       - /opt/src/peter-wiki-docker/htdocs:/home/web/hosts/peter.schoenbucher.ch/htdocs
       - /opt/src/peter-wiki-docker/pmwiki-2.2.70:/home/web/pmwiki-2.2.70
+      - $PWD/shared_wiki/pub/skins/peter:/home/web/hosts/peter.schoenbucher.ch/htdocs/pub/skins/pmwiki # dann gibt es gelben Hintergund, aber pmwiki-32.gif wird nicht gefunden
       # - /opt/src/peter-wiki-docker/htdocs/pub:/home/web/shared_wiki/pub -> Dann motzt pmwiki-2.2.70/scripts/skins.php
       - /opt/src/peter-wiki-docker/shared_wiki:/home/web/shared_wiki
         # - ${PWD}/htdocs/:/home/web/hosts/peter.schoenbucher.ch
