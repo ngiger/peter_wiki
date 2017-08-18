@@ -84,3 +84,59 @@ sudo rsync -av /backup/daily.5/localhost/home/web/shared_wiki/ /home/web/hosts/d
 
 Danach konnte ich eine Unterseite wie http://prxserver:6543/cams/index.html ansehen. nicht jedoch via 
 http://prxserver:6543/pmwiki/index.php/Public/Cams?from=Main.HomePage
+
+
+## Log des Aufsetzen von Peters Server unter 94.130.75.222 (Hetzner)
+
+* Unter https://dns4.pro/ folgende Namen auf 94.130.75.222 weiterleiten: test_www.schoenbucher.ch test_peter.schoenbucher.ch test.iatrix.org test_www.iatrix.org* Peter gab mir root Zugang via /root/.ssh/authorized_keys
+* Pakete installiert via
+
+    apt-get update
+    apt-get install etckeeper git vim-nox htop iotop fish docker-compose docker.io letsencrypt
+    git config --global user.email 'niklaus.giger@member.fsf.org'
+    git config --global user.name "Niklaus Giger"
+    useradd --create-home niklaus
+    mkdir /home/niklaus/.ssh
+    mkdir /opt/src
+    cp /root/.ssh/authorized_keys /home/niklaus/.ssh
+    chown -R niklaus:niklaus /home/niklaus/.ssh /opt/src
+    # Jetzt kann Niklaus via ssh einloggen in sein unprivilegiertes Konto
+    adduser sbu docker
+    adduser niklaus docker
+    # Zuerst versuchte ich Namen mit vorgestelltem 'test_' zu erzeugen. Dies hatte letsencrypt nicht gerne (dn4pro hatte keine Propbleme damit. Deshalb auf test als Prefix umgeschaltet
+    letsencrypt certonly # niklaus.giger@hispeed.ch, Folgendd Domainnamen eingegeben testwww.schoenbucher.ch testpeter.schoenbucher.ch test.iatrix.org testwww.iatrix.org
+    # Congratulations! Your certificate and chain have been saved at /etc/letsencrypt/live/testwww.schoenbucher.ch/fullchain.pem.  Your cert will expire on 2017-11-16. 
+
+
+* Als Benutzer niklaus folgendes gemacht
+
+    git config --global user.email 'niklaus.giger@member.fsf.org'
+    git config --global user.name "Niklaus Giger"
+    ssh-keygen
+    ssh-copy-id -p 4444 praxis.praxisunion.ch
+    cd /opt/src
+    git clone https://github.com/ngiger/peter_wiki.git /opt/src/peter-wiki-docker
+    cd /opt/src/peter-wiki-docker
+    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/shared_wiki .
+    mkdir htdocs
+    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/cams htdocs
+    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/pwp htdocs
+    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/pix htdocs
+    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/lumed htdocs
+
+    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki_old/pmwiki-groups htdocs
+    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki_old/uploads htdocs
+    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki_old/wiki.d htdocs
+      # scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/local htdocs
+    cd /opt/src/peter-wiki-docker
+    docker-compose up --build peter_wiki
+    http://94.130.75.222:6543 # Probleme da auf https umgeleitet und Zertifikat Fehler
+    # letsencrpy certonly geholt. Danach zeigte es die htdocs ohne 
+    # Zur Fehlersuche
+    docker-compose exec peter_wiki /bin/bash # dort drin tail -f /var/log/apache2/*log
+    wget http://www.pmwiki.org/pub/pmwiki/pmwiki-2.2.70.tgz
+    tar -zxvf pmwiki-2.2.70.tgz
+    sudo chown -R www-data:www-data pmwiki-2.2.70/
+    sudo chgrp -R www-data htdocs/wiki.d/ # Jetzt kommt
+
+Diverse kleine Änderungen gemacht (skin-Dateien, Dockerfile, docker-compose). Details gemäss git log
