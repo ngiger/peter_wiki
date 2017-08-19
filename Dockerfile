@@ -10,9 +10,9 @@ RUN apt-get update && apt-get install -y \
   php5-recode \
   apache2-utils \
   apache2-mpm-prefork \
-  apache2
+  apache2 \
+  wget
 
-RUN mkdir -p /home/web/pmwiki-2.2.70/
 EXPOSE 80
 ADD assets/peter.schoenbucher.ch.conf /etc/apache2/sites-available/default
 
@@ -27,7 +27,12 @@ ADD assets/peter.schoenbucher.ch.conf /etc/apache2/sites-available/default
 #  	&& ln -sf /dev/stderr /var/log/apache2/error.log \
 #    	&& chown www-data  /var/log/apache2/access.log  /var/log/apache2/error.log 
 
-CMD ln -sf /dev/stdout /var/log/apache2/access.log \
+RUN mkdir /home/web 
+RUN chown -R www-data:www-data  /home/web
+RUN wget http://www.pmwiki.org/pub/pmwiki/pmwiki-2.2.70.tgz
+RUN tar -C  /home/web -xzvf pmwiki-2.2.70.tgz
+    
+RUN ln -sf /dev/stdout /var/log/apache2/access.log \
 	&& ln -sf /dev/stderr /var/log/apache2/error.log
 
 # ADD htpasswd /etc/apache2/htpasswd
