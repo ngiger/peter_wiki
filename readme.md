@@ -154,3 +154,16 @@ Diverse kleine Änderungen gemacht (skin-Dateien, Dockerfile, docker-compose). D
     sudo systemctl enable docker_peter_wiki
     sudo systemctl start docker_peter_wiki
     sudo systemctl status docker_peter_wiki
+    
+### HTTPS für nextcloud.schoenbucher.ch aktivieren
+
+* Eintrag in dns4.pro für nextcloud.schoenbucher.ch gemacht
+* SSLCertificateKeyFile und SSLCertificateFile in /etc/sites-available/default-ssl.conf geändert
+* nextcloud.schoenbucher.ch in /etc/hosts für IPv4 und IPv6 hinzugefügt
+* In /etc/apache2/sites-available/000-default.conf Zeile `ServerName nextcloud.schoenbucher.ch` hinzugefügt
+
+    Commit für diese Aktionen war:
+    commit 47372cdc61067c5115a67f1911b53c5bc6611e10
+    Author: Niklaus Giger <niklaus.giger@member.fsf.org>
+    Date:   Sat Aug 19 19:10:12 2017 +0200
+        Added HTTPS für nextcloud.schoenbucher.ch
