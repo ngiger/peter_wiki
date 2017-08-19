@@ -18,6 +18,7 @@ services:
       - 6544:80
     volumes:
       - /opt/src/peter-wiki-docker/htdocs:/home/web/hosts/peter.schoenbucher.ch/htdocs
+      - /opt/src/peter-wiki/htdocs/index.php:/home/web/hosts/peter.schoenbucher.ch/htdocs/index.php
       - /opt/src/peter-wiki-docker/shared_wiki/pub/skins/peter:/home/web/hosts/peter.schoenbucher.ch/htdocs/pub/skins/pmwiki
 
 networks:
