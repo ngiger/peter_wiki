@@ -9,7 +9,20 @@
 #
 version: '2.0'
 services:
-  ng_wiki:
+  peter_wiki:
+    # image: ngiger/peter_wiki
+    build: .
+    networks:
+      private:
+      public:
+    ports:
+      - 6543:80
+    volumes:
+      - /opt/src/peter-wiki-docker/htdocs:/home/web/hosts/peter.schoenbucher.ch/htdocs
+      - /opt/src/peter-wiki-docker/shared_wiki/pub/skins/peter:/home/web/hosts/peter.schoenbucher.ch/htdocs/pub/skins/pmwiki
+      - /opt/src/peter-wiki-docker/shared_wiki:/home/web/shared_wiki
+
+  testpeter_wiki:
     build: .
     networks:
       private:
@@ -18,8 +31,8 @@ services:
       - 6544:80
     volumes:
       - /opt/src/peter-wiki-docker/htdocs:/home/web/hosts/peter.schoenbucher.ch/htdocs
-      - /opt/src/peter-wiki/htdocs/index.php:/home/web/hosts/peter.schoenbucher.ch/htdocs/index.php
       - /opt/src/peter-wiki-docker/shared_wiki/pub/skins/peter:/home/web/hosts/peter.schoenbucher.ch/htdocs/pub/skins/pmwiki
+      - /opt/src/peter-wiki-docker/shared_wiki:/home/web/shared_wiki
 
 networks:
   public:
