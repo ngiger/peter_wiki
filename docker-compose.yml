@@ -30,9 +30,10 @@ services:
     ports:
       - 6544:80
     volumes:
-      - /opt/src/peter-wiki-docker/htdocs:/home/web/hosts/peter.schoenbucher.ch/htdocs
-      - /opt/src/peter-wiki-docker/shared_wiki/pub/skins/peter:/home/web/hosts/peter.schoenbucher.ch/htdocs/pub/skins/pmwiki
-      - /opt/src/peter-wiki-docker/shared_wiki:/home/web/shared_wiki
+      - $PWD/pmwiki-2.2.102:/home/web/pmwiki-2.2.102
+      - /home/web/hosts/peter.schoenbucher.ch/htdocs:/home/web/hosts/peter.schoenbucher.ch/htdocs  
+      - $PWD/skins/peter:/home/web/hosts/peter.schoenbucher.ch/htdocs/pub/skins/pmwiki
+      - $PWD/local:/home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki/local
 
 networks:
   public:

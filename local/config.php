@@ -8,7 +8,7 @@
 ##  to PmWiki. 
 
 ##  $WikiTitle is the name that appears in the browser's title bar.
-$WikiTitle = 'schoebus homepage';
+$WikiTitle = 'schoebus XXX homepage';
 
 ##  $ScriptUrl is your preferred URL for accessing wiki pages
 ##  $PubDirUrl is the URL for the pub directory.
@@ -20,10 +20,8 @@ $WikiTitle = 'schoebus homepage';
 # $PubDirUrl = 'https://peter.schoenbucher.ch/pmwiki/pub';
 # $ScriptUrl = 'https://peter.schoenbucher.ch/pmwiki/index.php';
 # ------------------------------------------------------------------------------------------------------
-# Zum Testen in Docker auf prxserver via http://prxserver:6543
-# ------------------------------------------------------------------------------------------------------
-$PubDirUrl = 'http://prxserver:6543/pmwiki/pub';
-$ScriptUrl = 'http://prxserver:6543/pmwiki/index.php';
+$PubDirUrl = "$HOST_NAME/pmwiki/pub";
+$ScriptUrl = "$HOST_NAME/pmwiki/index.php";
 # ------------------------------------------------------------------------------------------------------
 #vorbereitet f css auslagerung - stimmt wohl no nicht
 #kopiert von iatrix, motiviert weil gui-edit no ni funktionieren
@@ -42,7 +40,7 @@ $EnablePathInfo = 1;
 include_once("$FarmD/cookbook/includeurl.php");                     // erlaubt fremde seiten einzuschliessen
 ## geht ni me 2015
 #include_once("$FarmD/cookbook/XToDo.php");                //x todo 
-#include_once("$FarmD/cookbook/counter.php");              //seiten-editier-z‰hler 
+#include_once("$FarmD/cookbook/counter.php");              //seiten-editier-z√§hler 
 #include_once("$FarmD/cookbook/googlecalendar.php");              // google-calender einbinden
 ## verzichtet 2015
 # include_once("$FarmD/pub/fckeditor/FCKEditor/fckeditor.php");       // FCkEditor

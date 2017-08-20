@@ -1,3 +1,12 @@
+# By Niklaus Giger. 
+# Replace in this file /opt/src/peter-wiki by the path of your checkout
+# Then activate it using the following commands
+# sudo  cp /opt/src/peter-wiki-docker/assets/docker_peter_wiki.service  /etc/systemd/system/
+# sudo  systemctl daemon-reload 
+# sudo  systemctl enable docker_peter_wiki
+# sudo  systemctl start docker_peter_wiki
+# sudo  systemctl status docker_peter_wiki
+
 [Unit]
 Description=Daemon for Peters privates wiki unter https://peter.schoenbucher.ch
 After=network.target docker.service 
