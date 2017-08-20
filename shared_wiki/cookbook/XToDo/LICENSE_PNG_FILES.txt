@@ -1,0 +1,45 @@
+
+Copyright (C) 2005 Julian I. Kamil <julian.kamil@gmail.com>
+No warranty is provided.  Use at your own risk.
+
+Commercial support is available through ESV Media Group
+which can be reached at: http://www.ESV-i.com/.
+
+File names:
+    XToDo-Completed.png
+    XToDo-InProgress.png
+    XToDo-OnHold.png
+    XToDo-Open.png
+    XToDo-Overdue.png
+
+Author: Julian I. Kamil <julian.kamil@gmail.com>
+Created: 2005-11-03
+Description:
+    These are status icon images for the XToDo to do list
+    management software.
+    Please see:
+        http://www.madhckr.com/project/PmWiki/XToDo
+    for a live example and doumentation.
+
+These files are part of XToDo.
+These files are not part of PmWiki.
+
+XToDo is free software; you can redistribute it and / or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+XToDo is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with XToDo; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+$Id: LICENSE_PNG_FILES.txt,v 1.1 2005/11/11 17:18:34 julian Exp $
+
+History:
+    2005-11-03  jik  Status image files created.
+    2005-11-11  jik  License file created.
