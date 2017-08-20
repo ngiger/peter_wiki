@@ -1,0 +1,93 @@
+#!/usr/bin/env ruby
+
+# Copyright (c) by Niklaus Giger
+# License: GPL v3.0 or later
+require 'ostruct'
+require 'open-uri'
+require 'fileutils'
+
+ROOT = Dir.pwd
+PM_WIKI_VERSION = '2.2.102'
+CONFIG_PHP = File.join(Dir.pwd, '../htdocs/pmwiki/local/config.php')
+puts CONFIG_PHP
+ORIG_WIKI_D = File.expand_path(File.join(Dir.pwd, '../htdocs/pmwiki/wiki.d'))
+
+INSTALL_DIR   = File.join(ROOT, "pmwiki-#{PM_WIKI_VERSION}")
+COOKBOOK_DIR  = File.join(INSTALL_DIR, 'cookbook')
+
+PMWIKI_COOKBOOKS = [
+ 'http://www.pmwiki.org/pmwiki/uploads/Cookbook/ajaxeditsupport-1.0a.tar.gz',
+ 'http://www.pmwiki.org/pmwiki/uploads/Cookbook/e-protect.php',
+ 'http://www.pmwiki.org/pmwiki/uploads/Cookbook/includeurl.php',
+ 'http://github.com/Nepherim/EditToolbar/zipball/master',
+  ]
+
+PM_WIKI_I18N_URL = 'http://www.pmwiki.org/pub/pmwiki/i18n/i18n-de.zip'
+
+PM_WIKI = OpenStruct.new
+PM_WIKI.version = PM_WIKI_VERSION
+PM_WIKI.download_url = {
+  '2.2.70' => "http://www.pmwiki.org/pub/pmwiki/pmwiki-2.2.70.tgz",
+  '2.2.102' => "http://www.pmwiki.org/pub/pmwiki/pmwiki-2.2.102.tgz",
+}
+PM_WIKI.md5 = {
+  '2.2.70' =>  '381a9900dceb67715a2ce35a456803eb',
+  '2.2.102' =>  '3c1a3ce856010bc9c6305b8abd2282a1',
+}
+
+def download_one_file(url)
+  fname = File.basename(url).chomp
+  unless File.exist?(fname)
+    cmd = "wget #{url}"
+    unless `#{cmd}`
+      raise "Unable to execute #{cmd}"
+    end
+    puts "Got #{url} size #{(File.size(fname)/1024).to_i} kB"
+  end
+  fname
+end
+
+def download(prog_version)
+  url = PM_WIKI.download_url[prog_version]
+  fname = File.basename(url)
+  unless File.exist?(fname)
+    content = open(url){|f| f.read }
+    File.open(fname, 'w+') {|f| f.write(content)}
+    puts "Got #{url} size #{(content.size/1024).to_i} kB"
+  end
+  md5 = PM_WIKI.md5[prog_version]
+  puts "md5 should be #{md5}"
+  md5_check = `md5sum #{fname}`.split(' ')[0]
+  puts "md5_check is #{md5_check}"
+  unless md5_check.eql?(md5)
+    raise "md5_check #{md5_check} for #{fname} does not match #{md5}"
+  end
+  cmd = "tar -xvf #{fname}"
+  unless `#{cmd}`
+    raise "Unable to execute #{cmd}"
+  end
+end
+
+download(PM_WIKI_VERSION)
+
+PMWIKI_COOKBOOKS.each do |cookbook|
+  Dir.chdir(COOKBOOK_DIR)
+  puts "cookbook is #{cookbook}"
+  fname = download_one_file(cookbook)
+  if /EditToolbar/i.match(cookbook)
+    FileUtils.cp_r(Dir.glob("Nepherim-EditToolbar-*/cookbook/edittoolbar").first, '.', verbose: true)
+    FileUtils.cp_r(Dir.glob("Nepherim-EditToolbar-*/pub/edittoolbar").first, '.', verbose: true)
+  elsif /gz$/.match(fname)
+    cmd = "tar -xvf #{fname}"
+    unless `#{cmd}`
+      raise "Unable to execute #{cmd}"
+    end
+  elsif fname.eql?('master')
+    cmd = "unzip -u #{fname}"
+    puts cmd
+    unless `#{cmd}`
+      raise "Unable to execute #{cmd}"
+    end
+  end
+end
+

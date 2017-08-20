@@ -167,3 +167,21 @@ Diverse kleine Änderungen gemacht (skin-Dateien, Dockerfile, docker-compose). D
     Author: Niklaus Giger <niklaus.giger@member.fsf.org>
     Date:   Sat Aug 19 19:10:12 2017 +0200
         Added HTTPS für nextcloud.schoenbucher.ch
+
+### Reorganisiert
+
+Ziele waren:
+* /home/web/hosts/peter.schoenbucher.ch/htdocs zu gebrauchen
+* pmwiki via Script zu installieren
+* PM-Wiki installation in git aufgenommen
+* /home/web/hosts als git repository initalisiert. Dazu auf Hetzner folgende Kommandos ausgeführt
+    cd /home/web/hosts/
+    git init .
+    git add *
+    git commit -m "Erster import"
+
+### Pendenzen
+
+* Backup auf Hetzner ?
+* Backup von Hetzner auf externe Harddisk ?
+* Log-Dateien von Apache2 archivieren und auswerten?

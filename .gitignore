@@ -1,0 +1,5 @@
+master
+*.gz
+*.zip
+*.tgz
+.htaccess
