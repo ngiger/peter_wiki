@@ -16,11 +16,13 @@ services:
       private:
       public:
     ports:
-      - 6543:80
+      - 60080:80
+      - 60443:443
     volumes:
       - /opt/src/peter-wiki-docker/htdocs:/home/web/hosts/peter.schoenbucher.ch/htdocs
       - /opt/src/peter-wiki-docker/shared_wiki/pub/skins/peter:/home/web/hosts/peter.schoenbucher.ch/htdocs/pub/skins/pmwiki
       - /opt/src/peter-wiki-docker/shared_wiki:/home/web/shared_wiki
+      - /etc/letsencrypt:/etc/letsencrypt
 
   testpeter_wiki:
     build: .
@@ -28,12 +30,14 @@ services:
       private:
       public:
     ports:
-      - 6544:80
+      - 61080:80
+      - 61443:443
     volumes:
       - $PWD/pmwiki-2.2.102:/home/web/pmwiki-2.2.102
       - /home/web/hosts/peter.schoenbucher.ch/htdocs:/home/web/hosts/peter.schoenbucher.ch/htdocs  
       - $PWD/skins/peter:/home/web/hosts/peter.schoenbucher.ch/htdocs/pub/skins/pmwiki
       - $PWD/local:/home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki/local
+      - /etc/letsencrypt:/etc/letsencrypt
 
 networks:
   public:
