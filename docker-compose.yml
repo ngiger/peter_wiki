@@ -53,6 +53,7 @@ services:
       - /home/web/hosts/www.iatrix.org/htdocs:/home/web/host/htdocs  
       - $PWD/iatrix.org/index.php:/home/web/host/htdocs/index.php
       - $PWD/skins/peter:/home/web/hosts/www.iatrix.org/htdocs/pub/skins/pmwiki
+      - $PWD/skins/simple:/home/web/host/htdocs/pub/skins/simple
       - $PWD/iatrix.org/local:/home/web/host/htdocs/local
 
   praxis:
