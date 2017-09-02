@@ -10,7 +10,8 @@ Hier werdeb die gefundene Lösung und die dazu notwendigen Entscheide dokumentie
 * cd /opt/src/peter_wiki
 * ./get_pmwiki_files # Im Moment 102 + gebraucht cookbooks
 * Alle Verzeichniss /home/web/hosts/<xy>/htdocs müsse vorhanden sein
-* docker-compos start iatrix peter # Stand 2.9.2017
+* docker-compose create --build
+* docker-compose start iatrix peter # Stand 2.9.2017
 
 # Entscheidungen
 

@@ -10,7 +10,6 @@
 version: '2.0'
 services:
   peter:
-    # image: ngiger/peter_wiki
     build: .
     networks:
       private:
@@ -18,14 +17,13 @@ services:
     ports:
       - 60080:80
     volumes:
+      - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
 #      - $PWD/pmwiki-2.2.70:/home/web/shared_wiki # Gab Fehler, aber startet auf
       - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
-      - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/index.php
-      - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/pmwiki/index.php
       - /home/web/hosts/peter.schoenbucher.ch/htdocs:/home/web/host/htdocs
+      - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/index.php
       - $PWD/peter.schoenbucher.ch/skins/peter:/home/web/shared_wiki/pub/skins/peter
       - $PWD/peter.schoenbucher.ch/local:/home/web/host/htdocs/pmwiki/local
-      - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
 
   testpeter:
     build: .
@@ -35,13 +33,12 @@ services:
     ports:
       - 61080:80
     volumes:
+      - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
       - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
-      - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/index.php
-      - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/pmwiki/index.php
       - /home/web/hosts/peter.schoenbucher.ch/htdocs:/home/web/host/htdocs
+      - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/pmwiki/index.php
       - $PWD/peter.schoenbucher.ch/skins/peter:/home/web/shared_wiki/pub/skins/peter
       - $PWD/peter.schoenbucher.ch/local:/home/web/host/htdocs/pmwiki/local
-      - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
 
   iatrix:
     build: .
@@ -56,7 +53,7 @@ services:
       - /home/web/hosts/www.iatrix.org/htdocs:/home/web/host/htdocs  
       - $PWD/iatrix.org/index.php:/home/web/host/htdocs/index.php
       - $PWD/skins/peter:/home/web/hosts/www.iatrix.org/htdocs/pub/skins/pmwiki
-      - $PWD/iatrix.org/local:/home/web/hosts/www.iatrix.org/htdocs/pmwiki/local
+      - $PWD/iatrix.org/local:/home/web/host/htdocs/local
 
   praxis:
     build: .

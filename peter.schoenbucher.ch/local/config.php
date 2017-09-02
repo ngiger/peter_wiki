@@ -1,6 +1,8 @@
 <?php
 $FarmPubD = '/home/web/shared_wiki/';
-# $EnableDiag = 1;  # add ?action=ruleset to see cause for WARNING like Deprecated: preg_replace()
+$FarmPubDirUrl = $_SERVER['HTTP_HOST'].'/pub';
+
+$EnableDiag = 1;  # add ?action=ruleset to see cause for WARNING like Deprecated: preg_replace()
 # googlesearch     directives       B>>>=            ! file: /home/web/host/htdocs/pmwiki/local/config.php, line: 181, pat: /\(:googlesearch:\)/e
 
 # print("Config.php für peter.schoenbucher.ch auf HOST ".$_SERVER['HTTP_HOST'].".<br>");
@@ -16,7 +18,7 @@ if (!defined('PmWiki')) exit();
 ##  to PmWiki. 
 
 ##  $WikiTitle is the name that appears in the browser's title bar.
-$WikiTitle = 'schoebus homepage';
+$WikiTitle = 'schoebus homepage (Docker)';
 ##  $ScriptUrl is your prleferred URL for accessing wiki pages
 ##  $PubDirUrl is the URL for the pub directory.
 # $ScriptUrl = 'http://www.mydomain.com/path/to/pmwiki.php';
@@ -178,24 +180,6 @@ Markup("'*", "inline", "/'\\*(.*?)\\*'/", "<b>$1</b>");    # '*bold*'
 # Deutsche Sprache
 XLPage('de','PmWikiDe.XLPage');
 
-if (false) { # using this markup trigger the error
-# file: /home/web/host/htdocs/pmwiki/local/config.php, line: 181, pat: /\(:googlesearch:\)/e
-# [!] Markup rules possibly incompatible with PHP 5.5 or newer.
-#     Please contact the recipe maintainer for update
-#     or see www.pmwiki.org/wiki/PmWiki/CustomMarkup
-Markup('googlesearch', 'directives', '/\\(:googlesearch:\\)/e',"Keep(\"
-<FORM method=GET action='http://www.google.ch/search'>
-<TABLE><tr><td>
-<A HREF='http://www.google.ch'>
-<IMG SRC='http://www.google.ch/logos/Logo_40wht.gif' border='0'
-ALT='Google' align='absmiddle'></A>
-<INPUT TYPE=text name=q size=20 maxlength=255 value=''>
-<INPUT TYPE=hidden name=hl value=de>
-<INPUT type=submit name=btnG VALUE='Google Search'>
-</td></tr></TABLE>
-</FORM>
-\")");
-}
 ## ToDo - add on (http://www.pmwiki.org/wiki/Cookbook/ToDo) 
 # variablen
 $todo_category_names = array('Kriens', 'Praxis', 'andere');
