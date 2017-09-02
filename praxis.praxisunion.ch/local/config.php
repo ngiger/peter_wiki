@@ -1,6 +1,14 @@
 <?php if (!defined('PmWiki')) exit();
-#peter.schoenbucher.ch in der farm
+#2013-09-30 v sbu kopiert von peter.schoenbucher.ch
 #
+#include_once('cookbook/e-protect.php');                     //'verschluesselt' mail-adressen beim speichern einer seite automatisch: 
+include_once("$FarmD/cookbook/counter.php");                       //seiten-editier-zähler
+#include_once('cookbook/XToDo.php');                         //x todo 
+#include_once('cookbook/googlecalendar.php');                 // google-calender einbinden
+#include_once('pub/fckeditor/FCKEditor/fckeditor.php');       // FCkEditor
+#include_once('cookbook/edit_fckeditor.php');                 // HTML -> Markup translator & wiki adapter 
+#include_once('cookbook/includeurl.php');                     // erlaubt fremde seiten einzuschliessen
+
 ##  This is a sample config.php file.  To use this file, copy it to
 ##  local/config.php, then edit it for whatever customizations you want.
 ##  Also, be sure to take a look at http://www.pmichaud.com/wiki/Cookbook
@@ -8,26 +16,14 @@
 ##  to PmWiki. 
 
 ##  $WikiTitle is the name that appears in the browser's title bar.
-$WikiTitle = 'schoebus XXX homepage';
+$WikiTitle = 'PraxisUnion intern';
 
 ##  $ScriptUrl is your preferred URL for accessing wiki pages
 ##  $PubDirUrl is the URL for the pub directory.
 # $ScriptUrl = 'http://www.mydomain.com/path/to/pmwiki.php';
 # $PubDirUrl = 'http://www.mydomain.com/path/to/pub';
-# ------------------------------------------------------------------------------------------------------
-# Ziel musss sein
-# ------------------------------------------------------------------------------------------------------
-# $PubDirUrl = 'https://peter.schoenbucher.ch/pmwiki/pub';
-# $ScriptUrl = 'https://peter.schoenbucher.ch/pmwiki/index.php';
-# ------------------------------------------------------------------------------------------------------
-$PubDirUrl = "$HOST_NAME/pmwiki/pub";
-$ScriptUrl = "$HOST_NAME/pmwiki/index.php";
-# ------------------------------------------------------------------------------------------------------
-#vorbereitet f css auslagerung - stimmt wohl no nicht
-#kopiert von iatrix, motiviert weil gui-edit no ni funktionieren
-#$FarmPubDirUrl = 'http://peter.schoenbucher.ch/pmwiki/pub';
-
-
+$ScriptUrl = "$HOST_NAME/wk/pmwiki.php";
+$PubDirUrl = "$HOST_NAME/pub";
 ##  If you want to use URLs of the form .../pmwiki.php/Group/PageName
 ##  instead of .../pmwiki.php?p=Group.PageName, try setting
 ##  $EnablePathInfo below.  Note that this doesn't work in all environments,
@@ -36,26 +32,14 @@ $ScriptUrl = "$HOST_NAME/pmwiki/index.php";
 ##  details about this setting and other ways to create nicer-looking urls.
 $EnablePathInfo = 1;
 
-#includes
-include_once("$FarmD/cookbook/includeurl.php");                     // erlaubt fremde seiten einzuschliessen
-## geht ni me 2015
-#include_once("$FarmD/cookbook/XToDo.php");                //x todo 
-#include_once("$FarmD/cookbook/counter.php");              //seiten-editier-zähler 
-#include_once("$FarmD/cookbook/googlecalendar.php");              // google-calender einbinden
-## verzichtet 2015
-# include_once("$FarmD/pub/fckeditor/FCKEditor/fckeditor.php");       // FCkEditor
-# include_once("$FarmD/cookbook/edit_fckeditor.php");                 // HTML -> Markup translator & wiki adapter 
-
 ## $PageLogoUrl is the URL for a logo image -- you can change this
 ## to your own logo if you wish.
-#$PageLogoUrl = "$PubDirUrl/skins/pmwiki/logo.gif";
-$PageLogoUrl = "$PubDirUrl/skins/peter/logo.gif";
+$PageLogoUrl = "$PubDirUrl/skins/logo/1b.jpg";
 
 ## If you want to have a custom skin, then set $Skin to the name
 ## of the directory (in pub/skins/) that contains your skin files.
 ## See PmWiki.Skins and Cookbook.Skins.
-#$Skin = 'pmwiki';
-$Skin = 'peter';
+$Skin = 'sbu';
 
 ## You'll probably want to set an administrative password that you
 ## can use to get into password-protected pages.  Also, by default 
@@ -71,16 +55,12 @@ $DefaultPasswords['admin']='$1$QNrmTIef$OVE4mCLukepsIcPZ/0X0z/';
 ##  PmWiki comes with graphical user interface buttons for editing;
 ##  to enable these buttons, set $EnableGUIButtons to 1.  
 $EnableGUIButtons = 1;
-#include_once("$FarmD/cookbook/ajaxeditsupport.php");
-include_once("$FarmD/cookbook/edittoolbar/edittoolbar.php");
 
 ##  If you want uploads enabled on your system, set $EnableUpload=1.
 ##  You'll also need to set a default upload password, or else set
 ##  passwords on individual groups and pages.  For more information
 ##  see PmWiki.UploadsAdmin.
-$EnableUpload = 1;
-$UploadExts['tif'] = 'application/tif';      # erweiterung durch sbu 
-$UploadMaxSize = 100000;                     # heraufgesetzt durch sbu 
+$EnableUpload = 1;                       
 # $DefaultPasswords['upload'] = crypt(' ');
 #  $DefaultPasswords['upload']='$1$SeLL09KW$rrJroPod4FzxSUJ6u43uC.';
 
@@ -88,7 +68,7 @@ $UploadMaxSize = 100000;                     # heraufgesetzt durch sbu
 ##  Setting $EnableDiag turns on the ?action=diag and ?action=phpinfo
 ##  actions, which often helps the PmWiki authors to troubleshoot 
 ##  various configuration and execution problems.
-#$EnableDiag = 1;                         # enable remote diagnostics
+$EnableDiag = 1;                         # enable remote diagnostics
 
 ##  By default, PmWiki doesn't allow browsers to cache pages.  Setting
 ##  $EnableIMSCaching=1; will re-enable browser caches in a somewhat
@@ -99,7 +79,6 @@ $UploadMaxSize = 100000;                     # heraufgesetzt durch sbu
 ##  Set $SpaceWikiWords if you want WikiWords to automatically 
 ##  have spaces before each sequence of capital letters.
 $SpaceWikiWords = 0;                     # turn on WikiWord spacing
-
 
 ##  Set $LinkWikiWords if you want to allow WikiWord links.
 #$LinkWikiWords = 1;                      # enable WikiWord links
@@ -125,21 +104,21 @@ $SpaceWikiWords = 0;                     # turn on WikiWord spacing
 ##  something like the following.  Note that the first argument has to 
 ##  be different for each call to Markup().  The example below disables
 ##  WikiWord links like COM1, COM2, COM1234, etc.
-# Markup('COM\d+', '<wikilink', '/\\bCOM\\d+/', "Keep('$0')");
+Markup('COM\d+', '<wikilink', '/\\bCOM\\d+/', "Keep('$0')");
 
 ##  $DiffKeepDays specifies the minimum number of days to keep a page's
 ##  revision history.  The default is 3650 (approximately 10 years).
-#$DiffKeepDays=999;                        # keep page history at least 30 days
+# $DiffKeepDays=30;                        # keep page history at least 30 days
 
 ## By default, viewers are able to see the names (but not the
 ## contents) of read-protected pages in search results and
 ## page listings.  Set $EnablePageListProtect to keep read-protected
 ## pages from appearing in search results.
-# $EnablePageListProtect = 1;
+$EnablePageListProtect = 1;
 
 ##  The refcount.php script enables ?action=refcount, which helps to
 ##  find missing and orphaned pages.  See PmWiki.RefCount.
-# if ($action == 'refcount') include_once('scripts/refcount.php');
+if ($action == 'refcount') include_once('scripts/refcount.php');
 
 ##  The feeds.php script enables ?action=rss, ?action=atom, ?action=rdf,
 ##  and ?action=dc, for generation of syndication feeds in various formats.
@@ -154,6 +133,8 @@ $SpaceWikiWords = 0;                     # turn on WikiWord spacing
 ##  (See PmWiki.CustomMarkup and the Cookbook for details and examples.)
 Markup("'~", "inline", "/'~(.*?)~'/", "<i>$1</i>");        # '~italic~'
 Markup("'*", "inline", "/'\\*(.*?)\\*'/", "<b>$1</b>");    # '*bold*'
+#Markup("+", "inline", "/'\\+(.+?)\\+'/", "<b>$1</b>");    # +bold+
+Markup("+", "inline", "/\\+(.+?)\\+/", "<b>$1</b>");    # +bold+
 
 ##  If you want to have to approve links to external sites before they
 ##  are turned into links, uncomment the line below.  See PmWiki.UrlApprovals.
@@ -162,44 +143,64 @@ Markup("'*", "inline", "/'\\*(.*?)\\*'/", "<b>$1</b>");    # '*bold*'
 # include_once('scripts/urlapprove.php');
 # $UnapprovedLinkCountMax = 10;
 
+##  The following lines make additional editing buttons appear in the
+##  edit page for subheadings, lists, tables, etc.
+$GUIButtons['h2'] = array(400, '\\n!! ', '\\n', '$[Heading]',
+                     '$GUIButtonDirUrlFmt/h2.gif"$[Heading]"');
+$GUIButtons['h3'] = array(402, '\\n!!! ', '\\n', '$[Subheading]',
+                     '$GUIButtonDirUrlFmt/h3.gif"$[Subheading]"');
+$GUIButtons['indent'] = array(500, '\\n->', '\\n', '$[Indented text]',
+                     '$GUIButtonDirUrlFmt/indent.gif"$[Indented text]"');
+$GUIButtons['outdent'] = array(510, '\\n-<', '\\n', '$[Hanging indent]',
+                     '$GUIButtonDirUrlFmt/outdent.gif"$[Hanging indent]"');
+$GUIButtons['ol'] = array(520, '\\n# ', '\\n', '$[Ordered list]',
+                     '$GUIButtonDirUrlFmt/ol.gif"$[Ordered (numbered) list]"');
+$GUIButtons['ul'] = array(530, '\\n* ', '\\n', '$[Unordered list]',
+                     '$GUIButtonDirUrlFmt/ul.gif"$[Unordered (bullet) list]"');
+$GUIButtons['hr'] = array(540, '\\n----\\n', '', '',
+                     '$GUIButtonDirUrlFmt/hr.gif"$[Horizontal rule]"');
+$GUIButtons['table'] = array(600,
+                       '||border=1 width=80%\\n||!Hdr ||!Hdr ||!Hdr ||\\n||     ||     ||     ||\\n||     ||     ||     ||\\n', '', '', 
+                     '$GUIButtonDirUrlFmt/table.gif"$[Table]"');
+
 ## SPRACHE der Bedienungselemente 
 # Deutsche Sprache
 XLPage('de','PmWikiDe.XLPage');
 
-Markup('googlesearch', 'directives', '/\\(:googlesearch:\\)/e',"Keep(\"
-<FORM method=GET action='http://www.google.ch/search'>
-<TABLE><tr><td>
-<A HREF='http://www.google.ch'>
-<IMG SRC='http://www.google.ch/logos/Logo_40wht.gif' border='0'
-ALT='Google' align='absmiddle'></A>
-<INPUT TYPE=text name=q size=20 maxlength=255 value=''>
-<INPUT TYPE=hidden name=hl value=de>
-<INPUT type=submit name=btnG VALUE='Google Search'>
-</td></tr></TABLE>
-</FORM>
-\")");
+# Markup('googlesearch', 'directives', '/\\(:googlesearch:\\)/e',"Keep(\"
+#<FORM method=GET action='http://www.google.ch/search'>
+#<TABLE><tr><td>
+#<A HREF='http://www.google.ch'>
+#<IMG SRC='http://www.google.ch/logos/Logo_40wht.gif' border='0'
+#ALT='Google' align='absmiddle'></A>
+#<INPUT TYPE=text name=q size=20 maxlength=255 value=''>
+#<INPUT TYPE=hidden name=hl value=de>
+#<INPUT type=submit name=btnG VALUE='Google Search'>
+#</td></tr></TABLE>
+#</FORM>
+#\")");
 
 ## ToDo - add on (http://www.pmwiki.org/wiki/Cookbook/ToDo) 
 # variablen
-$todo_category_names = array('Kriens', 'Praxis', 'andere');
-$todo_owner_names = array('sbu', 'mpa', 'andere');
-$HTMLStylesFmt['todo'] = <<< EOT
-.todo-form { border: none; }
-.todo-form tr td { border: none; font-weight: plain; 
-    text-align: left; padding: 4px; }
-.todo-form tr td.heading { text-align: right; 
-    width: 140px; padding-right: 6px; }
-table.todo-list { border: 2px solid #ccc; }
-table.todo-list tr.row1 { background-color: #eee; color: #555; }
-table.todo-list tr.row1 td { border-bottom: 2px solid #ccc; }
-table.todo-list tr:last-child.row1 td { border-bottom: none; }
-table.todo-list th { background-color: #ddd; padding: 3px; 
-    font-weight: normal; border: 1px solid #ccc; color: #444; }
-table.todo-list tr td { color: #666; }
-table.todo-simple-list tr td { border: none; padding: 4px; }
-.todo-category-text { color: #666; border-bottom: 1px solid #ccc; }
-.todo-description-text { color: #444; }
-.todo-overdue-text { color: #f66; border-bottom: 1px solid #ccc; }
-.todo-completed-text { color: #446600; border-bottom: 1px solid #ccc; }
-.todo-legend { text-align: center; color: #555; font-size: smaller; }
-EOT;
+#$todo_category_names = array('Kriens', 'Praxis', 'andere');
+#$todo_owner_names = array('sbu', 'mpa', 'andere');
+#$HTMLStylesFmt['todo'] = <<< EOT
+#.todo-form { border: none; }
+#.todo-form tr td { border: none; font-weight: plain; 
+#    text-align: left; padding: 4px; }
+#.todo-form tr td.heading { text-align: right; 
+#    width: 140px; padding-right: 6px; }
+#table.todo-list { border: 2px solid #ccc; }
+#table.todo-list tr.row1 { background-color: #eee; color: #555; }
+#table.todo-list tr.row1 td { border-bottom: 2px solid #ccc; }
+#table.todo-list tr:last-child.row1 td { border-bottom: none; }
+#table.todo-list th { background-color: #ddd; padding: 3px; 
+#    font-weight: normal; border: 1px solid #ccc; color: #444; }
+#table.todo-list tr td { color: #666; }
+#table.todo-simple-list tr td { border: none; padding: 4px; }
+#.todo-category-text { color: #666; border-bottom: 1px solid #ccc; }
+#.todo-description-text { color: #444; }
+#.todo-overdue-text { color: #f66; border-bottom: 1px solid #ccc; }
+#.todo-completed-text { color: #446600; border-bottom: 1px solid #ccc; }
+#.todo-legend { text-align: center; color: #555; font-size: smaller; }
+#EOT;
