@@ -1,0 +1,140 @@
+/* This sets the overall frame for the site */
+body {
+    margin: 0px; padding: 0px; 
+    background-color: #fff; color: #666;
+    font: 9pt Verdana;
+    line-height: 16px;
+}
+
+table { border-collapse: collapse; margin: 12px auto; }
+table tr td { border: 1px solid #ddd; padding: 4px 6px; vertical-align: top; }
+form { margin: 0px; padding: 0px; }
+hr { border: 0px; height: 1px; background-color: #ccc; color: #ccc; }
+p { margin: 0px; padding: 0px; }
+
+ul { margin: 0px 24px; padding: 0px; list-style: disc outside; }
+ul ul { margin-top: 0px; padding-top: 0px; list-style: circle outside; }
+ul ul ul { margin-top: 0px; padding-top: 0px; list-style: square outside; }
+
+a { text-decoration:none; color: #00a; }
+a:visited { text-decoration:none; color: #00a; }
+a:hover { text-decoration:underline; color: #00a; }
+a:active { color: #00f; }
+
+.vspace { margin-top: 10px; }
+p.vspace { padding: 0px; }
+.content-mat { padding: 14px 15px 10px 30px; margin: auto; background: none; }
+.clearer{ clear: both; display: block;  margin: 0px; padding: 0px; height: 0px; line-height: 1px; font-size: 0px; }
+.borderless-table tr td { border: none }
+
+#header { width: 1026px; height: 90px; margin: 10px auto 0px auto; text-align: left; }
+#header #page-title { color: #f77; font: 18pt Arial; font-weight: bold; padding: 20px 8px 8px 30px; }
+#header #page-subtitle { color: #f77; font: 12pt Arial; font-weight: bold; padding: 0px 8px 8px 30px; }
+#header a { color: #f77; }
+#header a:hover { text-decoration: underline; }
+
+#main { 
+    width: 980px; margin: 0px auto; 
+}
+
+#main h1 { font-size: 10pt; margin-bottom: 5px; padding: 0px; }
+#main h2 { font-size: 11pt; margin-bottom: 5px; padding: 0px;}
+#main h3 { font-size: 12pt; margin-bottom: 5px; padding: 0px; }
+#main h4 { font-size: 13pt; margin-bottom: 5px; padding: 0px; }
+#main h5 { font-size: 14pt; margin-bottom: 5px; padding: 0px; }
+#main h6 { font-size: 16pt; margin-bottom: 5px; padding: 0px; }
+
+#content { float: left; width: 712px;  text-align: left; border: 1px solid #00f; }
+
+#footer {
+    width: 1026px; height: 40px;
+    margin: 0px auto; padding: 0px 0px 8px 0px;
+}
+
+#copyright { margin: 0px 12px 0px 11px; padding: 2px 0px; border-top: 1px solid #ddd; font-size: 8pt; }
+
+#menubar {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 3px 0px;
+/*    border-bottom: 0px solid #eee; */
+    background-color: #eee;
+    text-align: left;
+    font-size: 8pt; 
+}
+
+#menubar ul { margin: 0px; padding: 0px; }
+#menubar ul li { list-style: none; display: inline; text-indent: 0px; text-align: left; padding-right: 8px; }
+#menubar a { color: #00a; }
+
+#popupmenu a {font-weight: bold; color: #55a; }
+#popupmenu a:hover { color: #55a; }
+#popupmenu li:hover { background: #eee; color: #eee; }
+#popupmenu li:hover ul { display: block; margin-top: 10px; background: #eee; }
+#popupmenu ul { padding: 0px; margin: 0px; list-style: none; }
+#popupmenu ul li { padding-left: 6px; margin: 0px; float: left; position: relative; border: 1px none #f00; }
+
+#popupmenu li ul {
+    display: none;
+    position: absolute; 
+    top: 1em;
+    left: -0px; 
+    width: 180px; 
+    border-top: 0px solid #888; 
+/*    border-bottom: 0px solid #888; */
+/*    padding-top: 0px; */
+/*    padding-bottom: 0px; */
+}
+
+#popupmenu li ul li {
+    display: block;
+    clear: both;
+    padding: 0px;
+    margin: 0px;
+    padding-right: 8px;
+    padding-left: 8px;
+    float: left;
+    color: #aaa;
+}
+
+/* aus peter.schoenbucher.ch-wiki kopiert 2009-10-10 schöbu. These are for the edit form. */
+#wikiedit form { margin:0px; width:120%; }
+#wikiedit textarea { width:120%; }
+.wikimessage { margin-top:4px; margin-bottom:4px; font-style:italic; }
+/*bis hierher*/
+
+#popupmenu li ul li:hover { color: #aaa; }
+
+#text { margin-top: 12px; margin-bottom: 12px; font-family: monospace; }
+
+
+/* Added: 2008-04-22 Wescom - Styles for search box etc. */ 
+input.menusearchbox {
+   font: 9pt arial,serif;  
+   border: 1px solid;
+   float: left;   
+}
+
+input.menusearchbutton { 
+   font: 8pt arial,serif; 
+   border: 1px solid;
+   margin-left: 5px;
+}
+
+ul.navleiste { list-style-type: none; margin-left: 0.6em; padding-left: 0.6em; font: 9pt arial,helvetica;}
+ul.navleiste li { display: inline; border: none; float: left;}
+
+.menu-edit {
+  clear: both;
+  display: inline;
+  list-style: none outside none;
+}
+
+.wikisearch {
+  display: none;
+}
+
+#rightbar {
+ float:right;
+ padding:0px;
+ margin:0px;
+}

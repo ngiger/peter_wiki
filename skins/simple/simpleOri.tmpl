@@ -1,0 +1,151 @@
+<!DOCTYPE 
+    HTML PUBLIC 
+    "-//W3C//DTD HTML 4.01 Transitional//EN" 
+    "http://www.w3.org/TR/html4/loose.dtd"
+    >
+
+<!--
+
+//
+// Copyright (C) Julian I. Kamil <julian.kamil@gmail.com>
+// No warranty is provided.  Use at your own risk.
+//
+// Commercial support is available through ESV Media Group
+// who can be reached at: http://www.ESV-i.com/.
+//
+// Name: simple.tmpl
+// Author: Julian I. Kamil <julian.kamil@gmail.com>
+// Created: 2005-05-18
+// Description:
+//     This is a simple skin for PmWiki. Please see:
+//         http://www.madhckr.com/project/PmWiki/SimpleSkin
+//     for a live example and doumentation.
+//
+// $Id: simple.tmpl,v 1.1 2005/08/17 19:24:54 julian Exp $
+//
+// History:
+//     2005-05-18  jik  Created.
+//     2005-06-21  jik  Added the directive that enables
+//                      the injection of additional stylesheets.
+//     2005/06/27  jik  Added SkinTone feature.
+//     2005/07/06  jik  Added group name in the title.
+//     2005/07/15  jik  Added code to style abbr on IE.
+//
+
+-->
+
+<html>
+    <head>
+        <title>$WikiTitle : $Group - $Titlespaced $ActionTitle</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <!--HeaderText-->
+        <link rel='stylesheet' title="Simple" href='$SkinDirUrl/simple.css' type='text/css' />
+        <!--[if IE]>
+            <link href='$SkinDirUrl/simple-ie.css' rel='stylesheet' type='text/css' />
+        <![endif]-->
+        <script type="text/javascript">
+        <!--//--><![CDATA[//><!--
+        startList = 
+            function() 
+            {
+                if (document.all && document.getElementById) {
+                    navRoot = document.getElementById("menu");
+                    for (i = 0; i < navRoot.childNodes.length; i++) {
+                        node = navRoot.childNodes[i];
+                        if (node.nodeName == "LI") {
+                            node.onmouseover = 
+                                function() { this.className += " over"; }
+                            node.onmouseout = 
+                                function() { this.className = this.className.replace(" over", ""); }
+                        }
+                    }
+                }
+            }
+
+        function styleAbbr() 
+        {
+            var oldBodyText, newBodyText, reg;
+
+            if (isIE) {
+                oldBodyText = document.body.innerHTML;
+                reg = /<ABBR([^>]*)>([^<]*)<\/ABBR>/g;
+                newBodyText = oldBodyText.replace(reg, '<ABBR $1><SPAN class=\"abbr\" $1>$2</SPAN></ABBR>');
+                document.body.innerHTML = newBodyText;
+            }
+        }
+
+        window.onload = function(){
+            styleAbbr();
+            startList();
+        };
+
+        isIE = (document.all) ? true:false;
+        //--><!]]>
+        </script>
+    </head>
+    <body bgcolor="#ffffff">
+        <div 
+            id="header" 
+            style="border: 1px none #ccf; background: url($SkinDirUrl/image/Box-Top-$SkinTone.jpg) no-repeat; " 
+            title='$[$Group &raquo; $Titlespaced was last modified on $LastModified]'
+            >
+            <table width="100%" style="padding: 0px; margin:0px;">
+                <tr>
+                    <td style="padding: 0px; margin:0px; border: none;">
+                        <div id="page-title">$SkinHomeLink</div>
+                        <div id="page-subtitle">$SkinGroupFmt &raquo; $SkinTitleFmt</div>
+                    </td>
+                    <td 
+                        align="right" width="120" 
+                        style="padding: 0px; margin:0px; padding-top: 16px; border: none;"
+                        >
+                        <center>
+                            <a href="$ScriptUrl/$[Main]"><img src="$PageLogoUrl" border="0" /></a>
+                        </center>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="main">
+            <div id="menubar" $SkinMenuBarVisible>
+                <div>
+                    <span style="float: left;">
+                        <ul>
+                            <li><a href='$PageUrl?action=edit'>$[Edit Page]</a></li>
+                            <li><a href='$PageUrl?action=diff'>$[History]</a></li>
+                            $SkinUploadLink
+                            <li><a href='$ScriptUrl/$[Site/Search]'>$[Search]</a></li>
+                        </ul>
+                    </span>
+                    <span id="popupmenu" style="float: right;">
+                        <ul id="menu">
+                            <li>Website Menu
+                                <!--wiki:Site.SideBar-->
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+                <div class="clearer"></div>
+            </div>
+
+            <div class="content-mat" style="border: 1px none #fcc;">
+                <div id="content" style="border: 1px none #ccc;">
+                    <!--PageText-->
+                </div>
+                <div class="clearer">&nbsp;</div>
+            </div>
+        </div>
+
+        <div id="footer" style="border: 1px none #000;">
+            <div id="copyright">
+                <span style="float: left; padding-left: 20px;">
+                    $SkinCopyright
+                </span>
+                <span style="float: right; display: block; padding-right: 20px;">
+                    $SkinPoweredBy
+                </span>
+            </div>
+        </div>
+    </body>
+</html>
