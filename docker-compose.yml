@@ -9,57 +9,86 @@
 #
 version: '2.0'
 services:
-  peter_wiki:
+  peter:
     # image: ngiger/peter_wiki
     build: .
     networks:
       private:
       public:
-    extra_hosts:
-      - "peter.schoenbucher.ch:127.0.0.1"
     ports:
       - 60080:80
-#    working_dir: "/home/web/hosts/peter.schoenbucher.ch/htdocs"
-#    command: [ "php", "-S", "0.0.0.0:8080" ]
-    working_dir: /home/web/host/htdocs
     volumes:
-      - $PWD/pmwiki-2.2.70:/home/web/shared_wiki
-      - /home/web/hosts/peter.schoenbucher.ch/logs:/home/web/host/logs  
-      - /home/web/hosts/peter.schoenbucher.ch/htdocs:/home/web/host/htdocs  
-      - $PWD/peter/skins:/home/web/hosts/peter.schoenbucher.ch/htdocs/pub/skins/pmwiki
-      - $PWD/peter/local:/home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki/local
+#      - $PWD/pmwiki-2.2.70:/home/web/shared_wiki # Gab Fehler, aber startet auf
+      - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
+      - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/index.php
+      - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/pmwiki/index.php
+      - /home/web/hosts/peter.schoenbucher.ch/htdocs:/home/web/host/htdocs
+      - $PWD/peter.schoenbucher.ch/skins/peter:/home/web/shared_wiki/pub/skins/peter
+      - $PWD/peter.schoenbucher.ch/local:/home/web/host/htdocs/pmwiki/local
       - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
-      # - $PWD/peter/apache/peter.schoenbucher.ch.conf:/etc/apache2/sites-enabled/peter.schoenbucher.ch.conf
 
-  testpeter_wiki:
+  testpeter:
     build: .
     networks:
       private:
       public:
     ports:
-      #- 61080:80
-      - 61080:61080
-      # - 61443:443
+      - 61080:80
     volumes:
       - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
-      - /home/web/hosts/peter.schoenbucher.ch/htdocs:/home/web/hosts/peter.schoenbucher.ch/htdocs  
-      - $PWD/skins/peter:/home/web/hosts/peter.schoenbucher.ch/htdocs/pub/skins/pmwiki
-      - $PWD/local:/home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki/local
-#      - /etc/letsencrypt:/etc/letsencrypt
+      - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/index.php
+      - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/pmwiki/index.php
+      - /home/web/hosts/peter.schoenbucher.ch/htdocs:/home/web/host/htdocs
+      - $PWD/peter.schoenbucher.ch/skins/peter:/home/web/shared_wiki/pub/skins/peter
+      - $PWD/peter.schoenbucher.ch/local:/home/web/host/htdocs/pmwiki/local
+      - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
+
   iatrix:
     build: .
     networks:
       private:
       public:
     ports:
-      - 62080:62080   # for testing on development machines use the IP-address from the log, e.g. "using 172.21.0.2" > http:172.21.0.2
-      - 62443:443
+      - 62080:80
     volumes:
+      - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
       - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
-      - /home/web/hosts/www.iatrix.org/htdocs:/home/web/hosts/www.iatrix.org/htdocs  
+      - /home/web/hosts/www.iatrix.org/htdocs:/home/web/host/htdocs  
+      - $PWD/iatrix.org/index.php:/home/web/host/htdocs/index.php
       - $PWD/skins/peter:/home/web/hosts/www.iatrix.org/htdocs/pub/skins/pmwiki
-      - $PWD/local:/home/web/hosts/www.iatrix.org/htdocs/pmwiki/local
-#      - /etc/letsencrypt:/etc/letsencrypt
+      - $PWD/iatrix.org/local:/home/web/hosts/www.iatrix.org/htdocs/pmwiki/local
+
+  praxis:
+    build: .
+    networks:
+      private:
+      public:
+    ports:
+      - 63080:80
+    volumes:
+      - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
+      - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
+      - /home/web/hosts/praxis.praxisunion.ch/htdocs:/home/web/host/htdocs  
+      - $PWD/praxis.praxisunion.ch/index.html:/home/web/host/htdocs/index.html
+      - $PWD/praxis.praxisunion.ch/index.php:/home/web/host/htdocs/index.php
+      - $PWD/praxis.praxisunion.ch/wk/index.php:/home/web/host/htdocs/wk/pmwiki.php
+      - $PWD/praxis.praxisunion.ch/wk/index.php:/home/web/host/htdocs/wk/index.php
+      - $PWD/skins/peter:/home/web/hosts/praxis.praxisunion.ch/htdocs/pub/skins/pmwiki
+      - $PWD/praxis.praxisunion.ch/local:/home/web/hosts/praxis.praxisunion.ch/htdocs/pmwiki/local
+
+  www_praxis:
+    build: .
+    networks:
+      private:
+      public:
+    ports:
+      - 64080:80
+    volumes:
+      - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
+      - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
+      - /home/web/hosts/www.praxis.praxisunion.ch/htdocs:/home/web/host/htdocs  
+      - $PWD/skins/peter:/home/web/hosts/www.praxis.praxisunion.ch/htdocs/pub/skins/pmwiki
+      - $PWD/www.praxis.praxisunion.ch/local:/home/web/hosts/www.praxis.praxisunion.ch/htdocs/pmwiki/local
 
 networks:
   public:

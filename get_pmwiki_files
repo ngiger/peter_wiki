@@ -16,11 +16,12 @@ INSTALL_DIR   = File.join(ROOT, "pmwiki-#{PM_WIKI_VERSION}")
 COOKBOOK_DIR  = File.join(INSTALL_DIR, 'cookbook')
 
 PMWIKI_COOKBOOKS = [
- 'http://www.pmwiki.org/pmwiki/uploads/Cookbook/ajaxeditsupport-1.0a.tar.gz',
- 'http://www.pmwiki.org/pmwiki/uploads/Cookbook/e-protect.php',
- 'http://www.pmwiki.org/pmwiki/uploads/Cookbook/includeurl.php',
- 'http://github.com/Nepherim/EditToolbar/zipball/master',
-  ]
+  'http://www.pmwiki.org/pmwiki/uploads/Cookbook/ajaxeditsupport-1.0a.tar.gz',
+  'http://www.pmwiki.org/pmwiki/uploads/Cookbook/e-protect.php',
+  'http://www.pmwiki.org/pmwiki/uploads/Cookbook/includeurl.php',
+  'http://www.pmwiki.org/pmwiki/uploads/Cookbook/counter.php',
+  'http://github.com/Nepherim/EditToolbar/zipball/master',
+]
 
 PM_WIKI_I18N_URL = 'http://www.pmwiki.org/pub/pmwiki/i18n/i18n-de.zip'
 
@@ -72,9 +73,14 @@ download(PM_WIKI_VERSION)
 
 PMWIKI_COOKBOOKS.each do |cookbook|
   Dir.chdir(COOKBOOK_DIR)
-  puts "cookbook is #{cookbook}"
+  puts "#{COOKBOOK_DIR}: install #{cookbook}"
   fname = download_one_file(cookbook)
   if /EditToolbar/i.match(cookbook)
+    cmd = "unzip -u #{fname}"
+    puts cmd
+    unless `#{cmd}`
+      raise "Unable to execute #{cmd}"
+    end
     FileUtils.cp_r(Dir.glob("Nepherim-EditToolbar-*/cookbook/edittoolbar").first, '.', verbose: true)
     FileUtils.cp_r(Dir.glob("Nepherim-EditToolbar-*/pub/edittoolbar").first, '.', verbose: true)
   elsif /gz$/.match(fname)

@@ -76,8 +76,7 @@ function SetSkin($pagename, $skin) {
     }
     closedir($dh);
   }
-  $CWD = getcwd();
-  if (!$IsTemplateLoaded) Abort("getcwd $CWD SkinDir $SkinDir  SkinDirUrl $SkinDirUrl PubDirUrl $PubDirUrl <br> FarmPubDirUrl $FarmPubDirUrl FarmD $FarmD Unable to load $Skin template", 'skin');
+  if (!$IsTemplateLoaded) Abort("Unable to load $Skin template", 'skin');
 }
 
 

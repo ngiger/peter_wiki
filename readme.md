@@ -1,4 +1,20 @@
-# Welches Docker-Image?
+# Peters Wiki
+
+Die einzelne Schritte bei der Installation sind dokumentiert im [Worklog](work_log.md)
+
+Hier werdeb die gefundene Lösung und die dazu notwendigen Entscheide dokumentiert.
+
+# Installation
+
+* git clone https://github.com/ngiger/peter_wiki.git /opt/src/peter_wiki
+* cd /opt/src/peter_wiki
+* ./get_pmwiki_files # Im Moment 102 + gebraucht cookbooks
+* Alle Verzeichniss /home/web/hosts/<xy>/htdocs müsse vorhanden sein
+* docker-compos start iatrix peter # Stand 2.9.2017
+
+# Entscheidungen
+
+## Welches Docker-Image?
 
 Kriterien: 
 
@@ -7,166 +23,6 @@ Kriterien:
 * NGINX
 
 Gefunden https://hub.docker.com/r/ishakuta/docker-nginx-php5/
-
-* Vorbereitungen
-
-Alle alten Docker-Pakete gelöscht und gepurged. Ebenfalls `rm -rf /var/lib/docker`. sbu und niklaus dere Gruppe Docker hinzugefügt
-
-Danach vorgegangen gemäss https://docs.docker.com/engine/installation/linux/docker-ce/debian/
-
-    cd /home/web/hosts/docker.schoenbucher.ch    
-    docker build -t ngiger/peter-wiki .
-    docker run --detach --rm --name peter -p 6542:80 ishakuta/docker-nginx-php5
-    # Danach konnte ich http://localhost:6542 das PHP-Info sehen (PHP Version 5.5.9-1ubuntu4)
-    docker-compose start peter_wiki
-    # Danach konnte ich http://localhost:6543/phpinfo.php das PHP-Info sehen (PHP Version 5.5.9-1ubuntu4)
-    # http://localhost:6543/ zeigte das favicon an, jedoch nicht alles
-    docker-compose exec peter_wiki /bin/bash # zum inspizieren 
-    # dort tail -f /var/log/nginx/*log /var/log/php5-fpm.log aufgerufen
-    #  include_once(/home/web/pmwiki-2.2.70/pmwiki.php) failed!!!
-    # jetzt motzt er wegen edittoolbar.php
-    # ist in /backup/daily.5/localhost/home/web/shared_wiki/cookbook/edittoolbar/edittoolbar.php
-
-    sudo find /backup/daily.5/localhost/home/web  -type f -name "*php" -exec grep -l edittoolbar  "{}" \;
-    /backup/weekly.3/localhost/home/web/shared_wiki/cookbook/edittoolbar/edittoolbar.php
-    sudo find /home/web/ -type f -name "*php" -exec grep -l farmconfig  "{}" \;
-    /home/web/pmwiki-2.2.102/pmwiki.php
-    /home/web/inaktiv/BACKUP_iatrix.org+havluagglo+www.praxisunion.ch/www.praxisunion.ch/public_html/pmwiki.php
-    /home/web/inaktiv/BACKUP_iatrix.org+havluagglo+www.praxisunion.ch/iatrix/pmwiki.php
-    /home/web/inaktiv/lumed.schoenbucher.chxxx/htdocs/pmwiki.php
-    /home/web/inaktiv/praxis.schoenbucher.ch/htdocs/wk/pmwiki.php
-    /home/web/inaktiv/iatrix.org/pmwiki.php
-    /home/web/inaktiv/kine-cranio.ch/htdocs/pmwiki.php
-    /home/web/inaktiv/iatrix.org+havluagglo.ch/iatrix/pmwiki.php
-    /home/web/pmwiki-2.2.70.old/pmwiki.php
-    /home/web/hosts/praxis.praxisunion.ch/htdocs/wk_old/pmwiki.php
-    /home/web/hosts/www.praxisunion.ch/mpwk/pmwiki-2.2.57/pmwiki.php
-    /home/web/hosts/www.praxisunion.ch/pmwiki.php
-    /home/web/hosts/peter.schoenbucher.ch/htdocs/lumed/pmwiki.php
-    /home/web/hosts/docker.schoenbucher.ch/htdocs/lumed/pmwiki.php
-    
-Mit Docker-Compose
-
-    docker-compose create --build peter_wiki
-    docker-compose start peter_wiki
-
-* Versuch mit NGINX /etc/init/php5-fpm.conf
-
-Vergebliche Versuche mein Modul zum Laufen zu bringen
-
-    php5-fpm - The PHP FastCGI Process Manager
-
-    description "The PHP FastCGI Process Manager"
-    author "Ondřej Surý <ondrej@debian.org>"
-
-    start on runlevel [2345]
-    stop on runlevel [016]
-
-    reload signal USR2
-
-    pre-start exec /usr/lib/php5/php5-fpm-checkconf
-
-    respawn
-    exec /usr/sbin/php5-fpm --nodaemonize --fpm-config /etc/php5/fpm/php-fpm.conf
-
-## Aufsetzen des  /home/web/hosts/docker.schoenbucher.ch/
-
-sudo rsync -av /backup/daily.5/localhost/home/web/hosts/peter.schoenbucher.ch/htdocs/ /home/web/hosts/docker.schoenbucher.ch/htdocs/
-sudo rsync -av /backup/daily.5/localhost/home/web/pmwiki-2.2.70/ /home/web/hosts/docker.schoenbucher.ch/pmwiki-2.2.70/
-sudo rsync -av /backup/daily.5/localhost/home/web/shared_wiki/ /home/web/hosts/docker.schoenbucher.ch/shared_wiki/
-
-      - /backup/daily.5/localhost/home/web/pmwiki-2.2.70:/home/web/pmwiki-2.2.70
-      - /backup/daily.5/localhost/home/web/shared_wiki:/home/web/shared_wiki
-      - /backup/weekly.3/localhost/home/web/shared_wiki/cookbook:/home/web/shared_wiki/cookbook/
-      - /backup/weekly.3/localhost/home/web/shared_wiki/pub:/home/web/shared_wiki/pub/
-
-Danach konnte ich eine Unterseite wie http://prxserver:6543/cams/index.html ansehen. nicht jedoch via 
-http://prxserver:6543/pmwiki/index.php/Public/Cams?from=Main.HomePage
-
-
-## Log des Aufsetzen von Peters Server unter 94.130.75.222 (Hetzner)
-
-* Unter https://dns4.pro/ folgende Namen auf 94.130.75.222 weiterleiten: test_www.schoenbucher.ch test_peter.schoenbucher.ch test.iatrix.org test_www.iatrix.org* Peter gab mir root Zugang via /root/.ssh/authorized_keys
-* Pakete installiert via
-
-    apt-get update
-    apt-get install etckeeper git vim-nox htop iotop fish docker-compose docker.io letsencrypt
-    git config --global user.email 'niklaus.giger@member.fsf.org'
-    git config --global user.name "Niklaus Giger"
-    useradd --create-home niklaus
-    mkdir /home/niklaus/.ssh
-    mkdir /opt/src
-    cp /root/.ssh/authorized_keys /home/niklaus/.ssh
-    chown -R niklaus:niklaus /home/niklaus/.ssh /opt/src
-    // Jetzt kann Niklaus via ssh einloggen in sein unprivilegiertes Konto
-    adduser sbu docker
-    adduser niklaus docker
-    // Zuerst versuchte ich Namen mit vorgestelltem 'test_' zu erzeugen. Dies hatte letsencrypt nicht gerne (dn4pro hatte keine Propbleme damit. Deshalb auf test als Prefix umgeschaltet
-    letsencrypt certonly # niklaus.giger@hispeed.ch, Folgendd Domainnamen eingegeben testwww.schoenbucher.ch testpeter.schoenbucher.ch test.iatrix.org testwww.iatrix.org
-    // Congratulations! Your certificate and chain have been saved at /etc/letsencrypt/live/testwww.schoenbucher.ch/fullchain.pem.  Your cert will expire on 2017-11-16. 
-
-
-* Als Benutzer niklaus folgendes gemacht
-
-    git config --global user.email 'niklaus.giger@member.fsf.org'
-    git config --global user.name "Niklaus Giger"
-    ssh-keygen
-    ssh-copy-id -p 4444 praxis.praxisunion.ch
-    cd /opt/src
-    git clone https://github.com/ngiger/peter_wiki.git /opt/src/peter-wiki-docker
-    cd /opt/src/peter-wiki-docker
-    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/shared_wiki .
-    mkdir htdocs
-    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/cams htdocs
-    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/pwp htdocs
-    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/pix htdocs
-    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/lumed htdocs
-
-    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki_old/pmwiki-groups htdocs
-    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki_old/uploads htdocs
-    scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki_old/wiki.d htdocs
-    // scp -r -P 4444 praxis.schoenbucher.ch:/home/web/hosts/peter.schoenbucher.ch/htdocs/local htdocs
-    cd /opt/src/peter-wiki-docker
-    docker-compose up --build peter_wiki
-    http://94.130.75.222:6543 # Probleme da auf https umgeleitet und Zertifikat Fehler
-    // letsencrpy certonly geholt. Danach zeigte es die htdocs ohne 
-    // Zur Fehlersuche
-    docker-compose exec peter_wiki /bin/bash # dort drin tail -f /var/log/apache2/*log
-    wget http://www.pmwiki.org/pub/pmwiki/pmwiki-2.2.70.tgz
-    tar -zxvf pmwiki-2.2.70.tgz
-    sudo chown -R www-data:www-data pmwiki-2.2.70/
-    sudo chgrp -R www-data htdocs/wiki.d/ # Jetzt kommt
-
-Diverse kleine Änderungen gemacht (skin-Dateien, Dockerfile, docker-compose). Details gemäss git log
-
-### Diverse Wiki-Seiten nach Docker-Instanzen umleiten
-
-    // assets/peter.schoenbucher.ch.conf um mehr ServerAlias erweitert
-    docker-compose up --build peter_wiki
-    sudo cp /opt/src/peter-wiki-docker/rewrite_wikis.conf /etc/apache2/sites-available/
-    cd /etc/apache2/sites-enabled/
-    sudo ln -s ../sites-available/rewrite_wikis.conf .
-    sudo a2enmod proxy
-    sudo systemctl restart apache2
-    // Auf dns4pro peter.schoenbucher auf den Hetzner-Server weiter geleitet
-    sudo cp /opt/src/peter-wiki-docker/assets/docker_peter_wiki.service  /etc/systemd/system/
-    sudo systemctl daemon-reload 
-    sudo systemctl enable docker_peter_wiki
-    sudo systemctl start docker_peter_wiki
-    sudo systemctl status docker_peter_wiki
-    
-### HTTPS für nextcloud.schoenbucher.ch aktivieren
-
-* Eintrag in dns4.pro für nextcloud.schoenbucher.ch gemacht
-* SSLCertificateKeyFile und SSLCertificateFile in /etc/sites-available/default-ssl.conf geändert
-* nextcloud.schoenbucher.ch in /etc/hosts für IPv4 und IPv6 hinzugefügt
-* In /etc/apache2/sites-available/000-default.conf Zeile `ServerName nextcloud.schoenbucher.ch` hinzugefügt
-
-    Commit für diese Aktionen war:
-    commit 47372cdc61067c5115a67f1911b53c5bc6611e10
-    Author: Niklaus Giger <niklaus.giger@member.fsf.org>
-    Date:   Sat Aug 19 19:10:12 2017 +0200
-        Added HTTPS für nextcloud.schoenbucher.ch
 
 ### Reorganisiert
 
@@ -180,8 +36,44 @@ Ziele waren:
     git add *
     git commit -m "Erster import"
 
+Ziele:
+* $ScriptUrl und $PubDirUrl sollen den Server-Namen enthalten und keine absoluten Namen wie 'https://praxis.praxisunion.ch/pub';
+    $ScriptUrl = 'http://'.$_SERVER['HTTP_HOST'].'/pmwiki/pmwiki.php';
+    $PubDirUrl = 'http://'.$_SERVER['HTTP_HOST'].'/pmwiki/pub';
+* skins und config.php werden hier local verwaltet, z.B.
+** org.iatrix/local/config.php
+** org.iatrix/skins/xxx
+* apache.conf für den Hosts werden ebenfalls hier verwaltet, z.B.
+** org.iatrix/apache/org.iatrix.conf
+* Innerhalb der Dockers wird immer dieselbe Apache.conf vewendet und diese wird hier unter ./apache2/common.conf verwaltet
+
+Damit sollten dann Unterschiede zwischen den verschiedenen Wiki-Seiten einfach gefunden und verstanden werden können.
+
+Das Umstellen von HTTP auf HTTPS wird im Host-Apache /etc/apache2/sites-available/000-default.conf gemacht und sollte etwa wie folgt aussehen:
+
+    <VirtualHost *:80>
+      Redirect permanent / https://%{SERVER_NAME}
+      ServerAdmin webmaster@localhost
+      DocumentRoot /var/www/html
+      ErrorLog ${APACHE_LOG_DIR}/error.log
+      CustomLog ${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>
+
+Die Docker loggen entweder nichts, via syslog oder in ein json file. Das ist anders als heute!!! Könnte aber eventuell durch volumes,
+welche /var/log/apache/access_log  in ein Host-File umleiten gelöst werden. Dafür sieht man dann via docker-compose logs nix mehr.
+
+### Probleme
+
+* In /peter.schoenbucher.ch/local/config.php wurde der Markup for google-search ausgeblendet, da er mit neueren Versionen von PHP nicht kompatibel sei.
+
 ### Pendenzen
 
 * Backup auf Hetzner ?
 * Backup von Hetzner auf externe Harddisk ?
 * Log-Dateien von Apache2 archivieren und auswerten?
+
+### Iatrix.org
+
+/home/web/hosts/www.iatrix.org/htdocs von prxserver kopiert (an den gleichen Ort und auf www-data geändert).
+index.php und pmwiki.php auf `<?php include_once('/home/web/shared_wiki/pmwiki.php');` geändert.
+In local/config.php überall `https://www.iatrix.org` nach `$HOST_NAME` (falls notwendig `"` anstelle von `'` gebraucht) ersetzt. Z.B `"$ScriptUrl = "$HOST_NAME/pmwiki.php";`. Damit läuft das wiki auch, wenn man http: anstelle von https: oder localhost:62080 gebraucht. Die Umsetzung von http -> https erfolgt im apache config!
