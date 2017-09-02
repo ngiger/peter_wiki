@@ -22,8 +22,10 @@ services:
       - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
       - /home/web/hosts/peter.schoenbucher.ch/htdocs:/home/web/host/htdocs
       - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/index.php
+      - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/pmwiki/index.php
       - $PWD/peter.schoenbucher.ch/skins/peter:/home/web/shared_wiki/pub/skins/peter
       - $PWD/peter.schoenbucher.ch/local:/home/web/host/htdocs/pmwiki/local
+      - $PWD/peter.schoenbucher.ch/local:/home/web/host/htdocs/local
 
   testpeter:
     build: .
