@@ -1,0 +1,4 @@
+#!/bin/bash
+logger "Starting $0"
+letsencrypt renew --agree-tos --apache >/dev/null
+logger "Finished $0 with status $?"

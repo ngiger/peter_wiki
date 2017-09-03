@@ -167,3 +167,37 @@ Diverse kleine Änderungen gemacht (skin-Dateien, Dockerfile, docker-compose). D
 ### 2. September 2017 
 
 rsync -av -e "ssh -p 4444" praxis.schoenbucher.ch:/home/web/hosts/www.praxis.praxisunion.ch/htdocs/ /home/web/hosts/www.praxis.praxisunion.ch/htdocs/
+
+Nochmals alles geholt: auf Hetzner
+    rsync -avz -e"ssh -p 4444" sbu@212.101.17.47:/home/web/hosts/peter.schoenbucher.ch/htdocs/ /home/web/hosts/peter.schoenbucher.ch/htdocs/
+
+Danach diverse logische links gelöscht, da ich 
+    rm /home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki/pub
+    rm /home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki/wiki.d
+    rm /home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki/cookbook
+    rm /home/web/hosts/peter.schoenbucher.ch/htdocs/pub
+    rm /home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki_old/pub
+    rm /home/web/hosts/peter.schoenbucher.ch/htdocs/cookbook
+    rm -rf /home/web/hosts/peter.schoenbucher.ch/htdocs/wiki.d
+    rm -rf /home/web/hosts/peter.schoenbucher.ch/htdocs/wiki.d.102
+    mv /home/web/hosts/peter.schoenbucher.ch/htdocs/pmwiki_old/wiki.d /home/web/hosts/peter.schoenbucher.ch/htdocs/
+
+
+### 3. September 2017 
+
+    apt-get install rsnapshot
+    cd /home/web/hosts && git commit -m ".."
+    apt-get install python-letsencrypt-apache
+    grep domains /etc/letsencrypt/renewal/testwww.schoenbucher.ch*.conf
+    # /etc/letsencrypt/renewal/testwww.schoenbucher.ch.conf:domains = testwww.schoenbucher.ch, testpeter.schoenbucher.ch, test.iatrix.org, testwww.iatrix.org
+    cp -pvu helpers/rsnapshot.conf.hetzner helpers/rsync.exclude /etc
+    cp -pvu helpers/*daily /etc/cron.daily
+    cp -pvu helpers/*monthly /etc/cron.monthly
+    cp -pvu helpers/letsencrypt_renew /etc/crontab.monthly
+    
+Auf prxserver zur Vorbereitung des Backups
+    sudo mkdir -p /backup/hetzner/hosts
+    sudo mkdir -p /backup/hetzner/etc
+    sudo chown -R sbu /backup/hetzner
+
+

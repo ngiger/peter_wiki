@@ -1,0 +1,18 @@
+config_version	1.2
+snapshot_root	/opt/backup
+cmd_cp		/bin/cp
+cmd_rm		/bin/rm
+cmd_rsync	/usr/bin/rsync
+rsync_long_args	--delete --numeric-ids --relative --delete-excluded --acls --perms
+cmd_logger	/usr/bin/logger
+retain		daily	30
+retain		monthly	100
+verbose		3
+loglevel	3
+lockfile	/var/run/rsnapshot.pid
+no_create_root	1
+sync_first	1
+logfile	/var/log/rsnapshot.log
+exclude_file	/etc/rsync.exclude
+backup	/home/web/hosts/.git		hetzner/
+backup	/etc/		hetzner/

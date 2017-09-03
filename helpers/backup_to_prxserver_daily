@@ -1,0 +1,6 @@
+#/bin/bash
+cd /home/web/hosts && git add . && git commit -m "Daily autocommit from $0"
+/usr/bin/rsnapshot -c /etc/rsnapshot.conf.hetzner sync
+/usr/bin/rsnapshot -c /etc/rsnapshot.conf.hetzner daily
+rsync -az -e "ssh -p 4444 " /home/web/hosts/.git/ sbu@praxis.praxisunion.ch:/backup/hetzner/hosts/
+rsync -az -e "ssh -p 4444 " /etc/ sbu@praxis.praxisunion.ch:/backup/hetzner/etc/

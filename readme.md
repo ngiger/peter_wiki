@@ -36,45 +36,80 @@ Ziele waren:
     git init .
     git add *
     git commit -m "Erster import"
-
-Ziele:
 * $ScriptUrl und $PubDirUrl sollen den Server-Namen enthalten und keine absoluten Namen wie 'https://praxis.praxisunion.ch/pub';
     $ScriptUrl = 'http://'.$_SERVER['HTTP_HOST'].'/pmwiki/pmwiki.php';
     $PubDirUrl = 'http://'.$_SERVER['HTTP_HOST'].'/pmwiki/pub';
 * skins und config.php werden hier local verwaltet, z.B.
 ** org.iatrix/local/config.php
-** org.iatrix/skins/xxx
-* apache.conf für den Hosts werden ebenfalls hier verwaltet, z.B.
-** org.iatrix/apache/org.iatrix.conf
-* Innerhalb der Dockers wird immer dieselbe Apache.conf vewendet und diese wird hier unter ./apache2/common.conf verwaltet
+** peter.schoenbucher.ch/skins/peter
+** praxis.praxisunion.ch/skins/sub
+* apache2/rewrite_wikis.conf (für den Host)
+* apache2/common.conf (für gleiche alle Docker-Instanzen)
 
 Damit sollten dann Unterschiede zwischen den verschiedenen Wiki-Seiten einfach gefunden und verstanden werden können.
+
+#### Damit HTTPS auf Hetzner richtig läuft brauchte es folgende Anpassungen
 
 Das Umstellen von HTTP auf HTTPS wird im Host-Apache /etc/apache2/sites-available/000-default.conf gemacht und sollte etwa wie folgt aussehen:
 
     <VirtualHost *:80>
       Redirect permanent / https://%{SERVER_NAME}
-      ServerAdmin webmaster@localhost
+      ServerAdmin niklaus.giger@hispeed.ch
       DocumentRoot /var/www/html
       ErrorLog ${APACHE_LOG_DIR}/error.log
       CustomLog ${APACHE_LOG_DIR}/access.log combined
+      RewriteEngine On
+      RewriteCond %{HTTPS} !=on
+      RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
     </VirtualHost>
 
+Ich habe überall eine E-Mailadresse von mir als WebMaster genommen    
 Die Docker loggen entweder nichts, via syslog oder in ein json file. Das ist anders als heute!!! Könnte aber eventuell durch volumes,
 welche /var/log/apache/access_log  in ein Host-File umleiten gelöst werden. Dafür sieht man dann via docker-compose logs nix mehr.
+
+Damit auf Hetzner alles richtig läuft braucht es dort den Eintrag `RequestHeader set X-Forwarded-Proto "https"` in der VirtualHost-Section des Apache-Conf. Weiter muss die (im internen Netz von Hetzner gebrauchte IP-Adresse von eth0, im Moment 172.31.1.100) dort wie folgt für HTTPS gebraucht werden
+    <VirtualHost 172.31.1.100:443>
+      ServerName peter.schoenbucher.ch
+
+Diese Datei wird ebenfalls hier verwaltet und wurde wie folgt aktiviert
+    cp -pvu apache2/rewrite_wikis.conf /etc/apache2/sites-available/rewrite_wikis.conf
+    systemctl restart apache2; systemctl status apache2
+    
+Dann braucht im local/config.php etwa folgende Zeilen
+    $FarmPubD = '/home/web/shared_wiki/';
+    $FarmD    = '/home/web/shared_wiki/';
+    if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
+      $_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'];
+      $PubDirUrl = $_SERVER['HTTP_X_FORWARDED_PROTO'].'://'.$_SERVER['HTTP_X_FORWARDED_HOST'].'/pub';
+      $ScriptUrl = $_SERVER['HTTP_X_FORWARDED_PROTO'].'://'.$_SERVER['HTTP_X_FORWARDED_HOST'].'/pmwiki.php';
+
+    } else {
+      $FarmPubDirUrl = $_SERVER['HTTP_HOST'].'/pub';
+    }
 
 ### Probleme
 
 * In /peter.schoenbucher.ch/local/config.php wurde der Markup for google-search ausgeblendet, da er mit neueren Versionen von PHP nicht kompatibel sei.
 
-### Pendenzen
+### Troubleshooting
 
-* Backup auf Hetzner ?
-* Backup von Hetzner auf externe Harddisk ?
+* http://peter.schoenbucher.ch:60080/local/phpinfo.php
+* Can you access https://peter.schoenbucher.ch/local/phpinfo.php? If yes is everything fine?
+* http://peter.schoenbucher.ch:60080/
+
+### Backup
+
+* Siehe helpers/*. Diese Dateien sollten wie folgt aktiviert werden
+
+    cp -pvu helpers/rsnapshot.conf.hetzner helpers/rsync.exclude /etc
+    cp -pvu helpers/*daily /etc/crontab.daily
+    cp -pvu helpers/*monthly /etc/crontab.monthly
+    cp -pvu helpers/letsencrypt_renew /etc/crontab.monthly
+
+** Es werden mit Hilfe von Rsnapshot tägliche (30) und maximal 200 monatliche Backups von /etc/ und /home/web/hosts unter /opt/backup angelegt
+** Täglich gibt es rsync von /etc und /home/web/hosts/.git -> praxiserver -> /backup/hetzner/
+
+# Ideen
+
 * Log-Dateien von Apache2 archivieren und auswerten?
 
-### Iatrix.org
-
-/home/web/hosts/www.iatrix.org/htdocs von prxserver kopiert (an den gleichen Ort und auf www-data geändert).
-index.php und pmwiki.php auf `<?php include_once('/home/web/shared_wiki/pmwiki.php');` geändert.
-In local/config.php überall `https://www.iatrix.org` nach `$HOST_NAME` (falls notwendig `"` anstelle von `'` gebraucht) ersetzt. Z.B `"$ScriptUrl = "$HOST_NAME/pmwiki.php";`. Damit läuft das wiki auch, wenn man http: anstelle von https: oder localhost:62080 gebraucht. Die Umsetzung von http -> https erfolgt im apache config!

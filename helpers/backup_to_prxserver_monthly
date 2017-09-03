@@ -1,0 +1,2 @@
+#/bin/bash
+/usr/bin/rsnapshot -c /etc/rsnapshot.conf.hetzner monthly
