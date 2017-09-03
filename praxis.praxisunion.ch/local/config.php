@@ -1,4 +1,15 @@
 <?php if (!defined('PmWiki')) exit();
+$FarmPubD = '/home/web/shared_wiki/';
+$FarmD    = '/home/web/shared_wiki/';
+if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
+  $_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'];
+  $PubDirUrl = $_SERVER['HTTP_X_FORWARDED_PROTO'].'://'.$_SERVER['HTTP_X_FORWARDED_HOST'].'/pmwiki/pub';
+  $ScriptUrl = $_SERVER['HTTP_X_FORWARDED_PROTO'].'://'.$_SERVER['HTTP_X_FORWARDED_HOST'].'/pmwiki/pmwiki.php';
+
+} else {
+  $FarmPubDirUrl = $_SERVER['HTTP_HOST'].'/pub';
+}
+
 #2013-09-30 v sbu kopiert von peter.schoenbucher.ch
 #
 #include_once('cookbook/e-protect.php');                     //'verschluesselt' mail-adressen beim speichern einer seite automatisch: 
@@ -16,14 +27,8 @@ include_once("$FarmD/cookbook/counter.php");                       //seiten-edit
 ##  to PmWiki. 
 
 ##  $WikiTitle is the name that appears in the browser's title bar.
-$WikiTitle = 'PraxisUnion intern';
+$WikiTitle = 'PraxisUnion intern (Docker)';
 
-##  $ScriptUrl is your preferred URL for accessing wiki pages
-##  $PubDirUrl is the URL for the pub directory.
-# $ScriptUrl = 'http://www.mydomain.com/path/to/pmwiki.php';
-# $PubDirUrl = 'http://www.mydomain.com/path/to/pub';
-$ScriptUrl = "$HOST_NAME/wk/pmwiki.php";
-$PubDirUrl = "$HOST_NAME/pub";
 ##  If you want to use URLs of the form .../pmwiki.php/Group/PageName
 ##  instead of .../pmwiki.php?p=Group.PageName, try setting
 ##  $EnablePathInfo below.  Note that this doesn't work in all environments,

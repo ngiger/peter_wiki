@@ -79,8 +79,9 @@ services:
       - $PWD/praxis.praxisunion.ch/index.php:/home/web/host/htdocs/index.php
       - $PWD/praxis.praxisunion.ch/wk/index.php:/home/web/host/htdocs/wk/pmwiki.php
       - $PWD/praxis.praxisunion.ch/wk/index.php:/home/web/host/htdocs/wk/index.php
-      - $PWD/skins/peter:/home/web/hosts/praxis.praxisunion.ch/htdocs/pub/skins/pmwiki
-      - $PWD/praxis.praxisunion.ch/local:/home/web/hosts/praxis.praxisunion.ch/htdocs/pmwiki/local
+      - $PWD/praxis.praxisunion.ch/skins/sbu:/home/web/host/htdocs/pmwiki/pub/skins/sbu
+      - $PWD/praxis.praxisunion.ch/skins/sbu:/home/web/host/htdocs/pub/skins/sbu
+      - $PWD/praxis.praxisunion.ch/local://home/web/host/htdocs/wk/local
 
   www_praxis:
     build: .

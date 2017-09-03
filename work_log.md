@@ -193,7 +193,7 @@ Danach diverse logische links gelöscht, da ich
     cp -pvu helpers/rsnapshot.conf.hetzner helpers/rsync.exclude /etc
     cp -pvu helpers/*daily /etc/cron.daily
     cp -pvu helpers/*monthly /etc/cron.monthly
-    cp -pvu helpers/letsencrypt_renew /etc/crontab.monthly
+    cp -pvu helpers/letsencrypt_renew /etc/cron.monthly
     
 Auf prxserver zur Vorbereitung des Backups
     sudo mkdir -p /backup/hetzner/hosts
