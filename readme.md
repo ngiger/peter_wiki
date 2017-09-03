@@ -102,8 +102,8 @@ Dann braucht im local/config.php etwa folgende Zeilen
 * Siehe helpers/*. Diese Dateien sollten wie folgt aktiviert werden
 
     cp -pvu helpers/rsnapshot.conf.hetzner helpers/rsync.exclude /etc
-    cp -pvu helpers/*daily /etc/crontab.daily
-    cp -pvu helpers/*monthly /etc/crontab.monthly
+    cp -pvu helpers/*daily /etc/cron.daily
+    cp -pvu helpers/*monthly /etc/cron.monthly
     cp -pvu helpers/letsencrypt_renew /etc/crontab.monthly
 
 ** Es werden mit Hilfe von Rsnapshot tägliche (30) und maximal 200 monatliche Backups von /etc/ und /home/web/hosts unter /opt/backup angelegt

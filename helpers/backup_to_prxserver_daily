@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 cd /home/web/hosts && git add . && git commit -m "Daily autocommit from $0"
 /usr/bin/rsnapshot -c /etc/rsnapshot.conf.hetzner sync
 /usr/bin/rsnapshot -c /etc/rsnapshot.conf.hetzner daily
