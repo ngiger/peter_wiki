@@ -1,6 +1,10 @@
 <?php if (!defined('PmWiki')) exit();
 $FarmPubD = '/home/web/shared_wiki/';
-$FarmPubDirUrl = $_SERVER['HTTP_HOST'].'/pub';
+if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
+  $FarmPubDirUrl = $_SERVER['HTTP_X_FORWARDED_HOST'].'/pub';
+} else {
+  $FarmPubDirUrl = $_SERVER['HTTP_HOST'].'/pub';
+}
 
 # print("Config.php für iatrix.org auf HOST ".$_SERVER['HTTP_HOST'].".<br>");
 # print("FarmPubD: $FarmPubD.<br>PubDirUrl ist $PubDirUrl<br>ScriptUrl ist $ScriptUrl<br>");

@@ -1,6 +1,10 @@
 <?php
 $FarmPubD = '/home/web/shared_wiki/';
-$FarmPubDirUrl = $_SERVER['HTTP_HOST'].'/pub';
+if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
+  $FarmPubDirUrl = $_SERVER['HTTP_X_FORWARDED_HOST'].'/pub';
+} else {
+  $FarmPubDirUrl = $_SERVER['HTTP_HOST'].'/pub';
+}
 
 $EnableDiag = 1;  # add ?action=ruleset to see cause for WARNING like Deprecated: preg_replace()
 # googlesearch     directives       B>>>=            ! file: /home/web/host/htdocs/pmwiki/local/config.php, line: 181, pat: /\(:googlesearch:\)/e
