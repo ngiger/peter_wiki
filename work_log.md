@@ -19,9 +19,9 @@ Danach vorgegangen gemäss https://docs.docker.com/engine/installation/linux/doc
     # jetzt motzt er wegen edittoolbar.php
     # ist in /backup/daily.5/localhost/home/web/shared_wiki/cookbook/edittoolbar/edittoolbar.php
 
-    sudo find /backup/daily.5/localhost/home/web  -type f -name "*php" -exec grep -l edittoolbar  "{}" \;
+    find /backup/daily.5/localhost/home/web  -type f -name "*php" -exec grep -l edittoolbar  "{}" \;
     /backup/weekly.3/localhost/home/web/shared_wiki/cookbook/edittoolbar/edittoolbar.php
-    sudo find /home/web/ -type f -name "*php" -exec grep -l farmconfig  "{}" \;
+    find /home/web/ -type f -name "*php" -exec grep -l farmconfig  "{}" \;
     /home/web/pmwiki-2.2.102/pmwiki.php
     /home/web/inaktiv/BACKUP_iatrix.org+havluagglo+www.praxisunion.ch/www.praxisunion.ch/public_html/pmwiki.php
     /home/web/inaktiv/BACKUP_iatrix.org+havluagglo+www.praxisunion.ch/iatrix/pmwiki.php
@@ -63,9 +63,9 @@ Vergebliche Versuche mein Modul zum Laufen zu bringen
 
 ### Aufsetzen des  /home/web/hosts/docker.schoenbucher.ch/
 
-sudo rsync -av /backup/daily.5/localhost/home/web/hosts/peter.schoenbucher.ch/htdocs/ /home/web/hosts/docker.schoenbucher.ch/htdocs/
-sudo rsync -av /backup/daily.5/localhost/home/web/pmwiki-2.2.70/ /home/web/hosts/docker.schoenbucher.ch/pmwiki-2.2.70/
-sudo rsync -av /backup/daily.5/localhost/home/web/shared_wiki/ /home/web/hosts/docker.schoenbucher.ch/shared_wiki/
+rsync -av /backup/daily.5/localhost/home/web/hosts/peter.schoenbucher.ch/htdocs/ /home/web/hosts/docker.schoenbucher.ch/htdocs/
+rsync -av /backup/daily.5/localhost/home/web/pmwiki-2.2.70/ /home/web/hosts/docker.schoenbucher.ch/pmwiki-2.2.70/
+rsync -av /backup/daily.5/localhost/home/web/shared_wiki/ /home/web/hosts/docker.schoenbucher.ch/shared_wiki/
 
       - /backup/daily.5/localhost/home/web/pmwiki-2.2.70:/home/web/pmwiki-2.2.70
       - /backup/daily.5/localhost/home/web/shared_wiki:/home/web/shared_wiki
@@ -130,8 +130,8 @@ http://prxserver:6543/pmwiki/index.php/Public/Cams?from=Main.HomePage
     docker-compose exec peter_wiki /bin/bash # dort drin tail -f /var/log/apache2/*log
     wget http://www.pmwiki.org/pub/pmwiki/pmwiki-2.2.70.tgz
     tar -zxvf pmwiki-2.2.70.tgz
-    sudo chown -R www-data:www-data pmwiki-2.2.70/
-    sudo chgrp -R www-data htdocs/wiki.d/ # Jetzt kommt
+    chown -R www-data:www-data pmwiki-2.2.70/
+    chgrp -R www-data htdocs/wiki.d/ # Jetzt kommt
 
 Diverse kleine Änderungen gemacht (skin-Dateien, Dockerfile, docker-compose). Details gemäss git log
 
@@ -139,17 +139,17 @@ Diverse kleine Änderungen gemacht (skin-Dateien, Dockerfile, docker-compose). D
 
     // assets/peter.schoenbucher.ch.conf um mehr ServerAlias erweitert
     docker-compose up --build peter_wiki
-    sudo cp /opt/src/peter-wiki-docker/rewrite_wikis.conf /etc/apache2/sites-available/
+    cp /opt/src/peter-wiki-docker/rewrite_wikis.conf /etc/apache2/sites-available/
     cd /etc/apache2/sites-enabled/
-    sudo ln -s ../sites-available/rewrite_wikis.conf .
-    sudo a2enmod proxy
-    sudo systemctl restart apache2
+    ln -s ../sites-available/rewrite_wikis.conf .
+    a2enmod proxy
+    systemctl restart apache2
     // Auf dns4pro peter.schoenbucher auf den Hetzner-Server weiter geleitet
-    sudo cp /opt/src/peter-wiki-docker/assets/docker_peter_wiki.service  /etc/systemd/system/
-    sudo systemctl daemon-reload 
-    sudo systemctl enable docker_peter_wiki
-    sudo systemctl start docker_peter_wiki
-    sudo systemctl status docker_peter_wiki
+    cp /opt/src/peter-wiki-docker/assets/docker_peter_wiki.service  /etc/systemd/system/
+    systemctl daemon-reload 
+    systemctl enable docker_peter_wiki
+    systemctl start docker_peter_wiki
+    systemctl status docker_peter_wiki
     
 ### HTTPS für nextcloud.schoenbucher.ch aktivieren
 
@@ -196,8 +196,26 @@ Danach diverse logische links gelöscht, da ich
     cp -pvu helpers/letsencrypt_renew /etc/cron.monthly
     
 Auf prxserver zur Vorbereitung des Backups
-    sudo mkdir -p /backup/hetzner/hosts
-    sudo mkdir -p /backup/hetzner/etc
-    sudo chown -R sbu /backup/hetzner
+    mkdir -p /backup/hetzner/hosts
+    mkdir -p /backup/hetzner/etc
+    chown -R sbu /backup/hetzner
 
+#### 3. September 2017 (Zweiter Teil praxis)
+
+    rsync -avz -e "ssh -p 4444 " sbu@praxis.praxisunion.ch:/home/web/hosts/praxis.praxisunion.ch /home/web/hosts/
+    chown -R www-data:www-data /home/web/hosts/praxis.praxisunion.ch/htdocs/
+    systemctl stop apache2
+    letsencrypt certonly --standalone -d iatrix.ch -d www.iatrix.ch -d www.iatrix.org -d iatrix.org
+    letsencrypt certonly --standalone -d test.praxisunion.ch -d test.praxis.praxisunion.ch -d test.www.praxisunion.ch
+
+    systemctl start apache2
+     testwww.schoenbucher.ch testpeter.schoenbucher.ch test.iatrix.org testwww.iatrix.org iatrix.ch
+    --apache -d iatrix.ch -d www.iatrix.ch
+    
+Installation von systemd für die Wiki-Dockers
+
+    systemctl daemon-reload
+    systemctl enable peterwiki
+    systemctl start peterwiki
+    systemctl status peterwiki
 

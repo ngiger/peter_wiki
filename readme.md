@@ -97,6 +97,14 @@ Dann braucht im local/config.php etwa folgende Zeilen
 * Can you access https://peter.schoenbucher.ch/local/phpinfo.php? If yes is everything fine?
 * http://peter.schoenbucher.ch:60080/
 
+### Automatisches Aufstarten nach einem Reboot
+
+Das ist anscheinend Trickreich. Auf der Kommandozeile geht `cd /opt/src/peter_wiki; docker-compose up -d` ohne Probleme.
+Aber das in systemd zu verpacken, das starten und stoppen kann ist etwas trickreich.
+
+Deshalb eine einfache Lösung, welche ihn nur aufstartet gefunden und in assets/peterwiki.service
+
+
 ### Backup
 
 * Siehe helpers/*. Diese Dateien sollten wie folgt aktiviert werden
