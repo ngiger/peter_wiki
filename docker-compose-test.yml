@@ -9,16 +9,15 @@
 #
 version: '2.0'
 services:
-  peter:
+  testpeter:
     build: .
     networks:
       private:
       public:
     ports:
-      - 60080:80
+      - 61080:80
     volumes:
       - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
-#      - $PWD/pmwiki-2.2.70:/home/web/shared_wiki # Gab Fehler, aber startet auf
       - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
       - /home/web/hosts/peter.schoenbucher.ch/htdocs:/home/web/host/htdocs
       - /home/web/hosts/peter.schoenbucher.ch/htdocs/wiki.d:/home/web/host/htdocs/pmwiki/wiki.d
@@ -29,40 +28,19 @@ services:
       - $PWD/peter.schoenbucher.ch/local:/home/web/host/htdocs/pmwiki/local
       - $PWD/peter.schoenbucher.ch/local:/home/web/host/htdocs/local
 
-  iatrix:
+  www_praxis:
     build: .
     networks:
       private:
       public:
     ports:
-      - 62080:80
+      - 64080:80
     volumes:
       - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
       - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
-      - /home/web/hosts/www.iatrix.org/htdocs:/home/web/host/htdocs  
-      - $PWD/iatrix.org/index.php:/home/web/host/htdocs/index.php
-      - $PWD/skins/peter:/home/web/hosts/www.iatrix.org/htdocs/pub/skins/pmwiki
-      - $PWD/skins/simple:/home/web/host/htdocs/pub/skins/simple
-      - $PWD/iatrix.org/local:/home/web/host/htdocs/local
-
-  praxis:
-    build: .
-    networks:
-      private:
-      public:
-    ports:
-      - 63080:80
-    volumes:
-      - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
-      - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
-      - /home/web/hosts/praxis.praxisunion.ch/htdocs:/home/web/host/htdocs  
-      - $PWD/praxis.praxisunion.ch/index.html:/home/web/host/htdocs/index.html
-      - $PWD/praxis.praxisunion.ch/index.php:/home/web/host/htdocs/index.php
-      - $PWD/praxis.praxisunion.ch/wk/index.php:/home/web/host/htdocs/wk/pmwiki.php
-      - $PWD/praxis.praxisunion.ch/wk/index.php:/home/web/host/htdocs/wk/index.php
-      - $PWD/praxis.praxisunion.ch/skins:/home/web/host/htdocs/pmwiki/pub/skins
-      - $PWD/praxis.praxisunion.ch/skinsu:/home/web/host/htdocs/pub/skins
-      - $PWD/praxis.praxisunion.ch/local://home/web/host/htdocs/wk/local
+      - /home/web/hosts/www.praxis.praxisunion.ch/htdocs:/home/web/host/htdocs  
+      - $PWD/skins/peter:/home/web/hosts/www.praxis.praxisunion.ch/htdocs/pub/skins/pmwiki
+      - $PWD/www.praxis.praxisunion.ch/local:/home/web/hosts/www.praxis.praxisunion.ch/htdocs/pmwiki/local
 
 networks:
   public:
