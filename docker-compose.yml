@@ -61,7 +61,7 @@ services:
       - $PWD/praxis.praxisunion.ch/wk/index.php:/home/web/host/htdocs/wk/pmwiki.php
       - $PWD/praxis.praxisunion.ch/wk/index.php:/home/web/host/htdocs/wk/index.php
       - $PWD/praxis.praxisunion.ch/skins:/home/web/host/htdocs/pmwiki/pub/skins
-      - $PWD/praxis.praxisunion.ch/skinsu:/home/web/host/htdocs/pub/skins
+      - $PWD/praxis.praxisunion.ch/skins:/home/web/host/htdocs/pub/skins
       - $PWD/praxis.praxisunion.ch/local://home/web/host/htdocs/wk/local
 
 networks:
