@@ -21,9 +21,11 @@ services:
 #      - $PWD/pmwiki-2.2.70:/home/web/shared_wiki # Gab Fehler, aber startet auf
       - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
       - /home/web/hosts/peter.schoenbucher.ch/htdocs:/home/web/host/htdocs
+      - /home/web/hosts/peter.schoenbucher.ch/htdocs/wiki.d:/home/web/host/htdocs/pmwiki/wiki.d
       - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/index.php
       - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/pmwiki/index.php
       - $PWD/peter.schoenbucher.ch/skins/peter:/home/web/host/htdocs/pmwiki/pub/skins/peter
+      - $PWD/peter.schoenbucher.ch/skins/peter:/home/web/host/htdocs/pub/skins/peter
       - $PWD/peter.schoenbucher.ch/local:/home/web/host/htdocs/pmwiki/local
       - $PWD/peter.schoenbucher.ch/local:/home/web/host/htdocs/local
 
@@ -38,9 +40,13 @@ services:
       - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
       - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
       - /home/web/hosts/peter.schoenbucher.ch/htdocs:/home/web/host/htdocs
+      - /home/web/hosts/peter.schoenbucher.ch/htdocs/wiki.d:/home/web/host/htdocs/pmwiki/wiki.d
+      - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/index.php
       - $PWD/peter.schoenbucher.ch/index.php:/home/web/host/htdocs/pmwiki/index.php
       - $PWD/peter.schoenbucher.ch/skins/peter:/home/web/host/htdocs/pmwiki/pub/skins/peter
+      - $PWD/peter.schoenbucher.ch/skins/peter:/home/web/host/htdocs/pub/skins/peter
       - $PWD/peter.schoenbucher.ch/local:/home/web/host/htdocs/pmwiki/local
+      - $PWD/peter.schoenbucher.ch/local:/home/web/host/htdocs/local
 
   iatrix:
     build: .
