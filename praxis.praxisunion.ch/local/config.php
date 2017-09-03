@@ -19,6 +19,7 @@ include_once("$FarmD/cookbook/counter.php");                       //seiten-edit
 #include_once('pub/fckeditor/FCKEditor/fckeditor.php');       // FCkEditor
 #include_once('cookbook/edit_fckeditor.php');                 // HTML -> Markup translator & wiki adapter 
 #include_once('cookbook/includeurl.php');                     // erlaubt fremde seiten einzuschliessen
+include_once("$FarmD/cookbook/edittoolbar/edittoolbar.php");
 
 ##  This is a sample config.php file.  To use this file, copy it to
 ##  local/config.php, then edit it for whatever customizations you want.
