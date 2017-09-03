@@ -1,7 +1,11 @@
 <?php
 $FarmPubD = '/home/web/shared_wiki/';
+$FarmD    = '/home/web/shared_wiki/';
 if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
-  $FarmPubDirUrl = $_SERVER['HTTP_X_FORWARDED_HOST'].'/pub';
+  $_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'];
+  $PubDirUrl = $_SERVER['HTTP_X_FORWARDED_PROTO'].'://'.$_SERVER['HTTP_X_FORWARDED_HOST'].'/pmwiki/pub';
+  $ScriptUrl = $_SERVER['HTTP_X_FORWARDED_PROTO'].'://'.$_SERVER['HTTP_X_FORWARDED_HOST'].'/pmwiki/pmwiki.php';
+
 } else {
   $FarmPubDirUrl = $_SERVER['HTTP_HOST'].'/pub';
 }
