@@ -214,6 +214,8 @@ Auf prxserver zur Vorbereitung des Backups
     
 Installation von systemd für die Wiki-Dockers
 
+
+    cp /opt/src/peter_wiki/assets/peterwiki.service  /etc/systemd/system/
     systemctl daemon-reload
     systemctl enable peterwiki
     systemctl start peterwiki
