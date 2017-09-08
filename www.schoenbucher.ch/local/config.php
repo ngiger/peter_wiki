@@ -14,8 +14,10 @@ if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
 XLPage('de','PmWikiDe.XLPage');
 
 include_once($FarmD.'cookbook/includeurl.php');                     // erlaubt fremde seiten einzuschliessen
-include_once($FarmD.'cookbook/counter.php');                       //seiten-editier-zähler#'verschlüsselt' mail-adressen beim speichern einer seite automatisch: 
-include_once($FarmD.'cookbook/e-protect.php');
+include_once($FarmD.'cookbook/counter.php');                       //seiten-editier-zähler#'verschlüsselt' mail-adressen beim speichern einer seite automatisch:
+# TODO: Niklaus 08.09.201 e-protect.php führt zu Fehlern 
+# Warning: preg_replace(): The /e modifier is no longer supported, use preg_replace_callback instead in /home/web/shared_wiki/pmwiki.php on line 1723
+#  include_once($FarmD.'cookbook/e-protect.php');
 ## nur auf dieser web-seite funktionieren damit die mailto-links nicht mehr. -- ??
 
 ##  This is a sample config.php file.  To use this file, copy it to
@@ -120,17 +122,17 @@ $Skin = 'schoenbucher';
 
 ##  The feeds.php script enables ?action=rss, ?action=atom, ?action=rdf,
 ##  and ?action=dc, for generation of syndication feeds in various formats.
- if ($action == 'rss') include_once($FarmD.'scripts/feeds.php');   # RSS 2.0
- if ($action == 'atom') include_once($FarmD.'scripts/feeds.php');  # Atom 1.0
- if ($action == 'dc') include_once($FarmD.'scripts/feeds.php');    # Dublin Core
- if ($action == 'rdf') include_once($FarmD.'scripts/feeds.php');   # RSS 1.0
+# if ($action == 'rss') include_once($FarmD.'scripts/feeds.php');   # RSS 2.0
+# if ($action == 'atom') include_once($FarmD.'scripts/feeds.php');  # Atom 1.0
+# if ($action == 'dc') include_once($FarmD.'scripts/feeds.php');    # Dublin Core
+# if ($action == 'rdf') include_once($FarmD.'scripts/feeds.php');   # RSS 1.0
 
 ##  PmWiki allows a great deal of flexibility for creating custom markup.
 ##  To add support for '*bold*' and '~italic~' markup (the single quotes
 ##  are part of the markup), uncomment the following lines. 
 ##  (See PmWiki.CustomMarkup and the Cookbook for details and examples.)
- Markup("'~", "inline", "/'~(.*?)~'/", "<i>$1</i>");        # '~italic~'
- Markup("'*", "inline", "/'\\*(.*?)\\*'/", "<b>$1</b>");    # '*bold*'
+Markup("'~", "inline", "/'~(.*?)~'/", "<i>$1</i>");        # '~italic~'
+Markup("'*", "inline", "/'\\*(.*?)\\*'/", "<b>$1</b>");    # '*bold*'
 
 ##  If you want to have to approve links to external sites before they
 ##  are turned into links, uncomment the line below.  See PmWiki.UrlApprovals.
