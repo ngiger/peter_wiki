@@ -8,7 +8,7 @@ if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
   $ScriptUrl = $_SERVER['HTTP_X_FORWARDED_PROTO'].'://'.$_SERVER['HTTP_X_FORWARDED_HOST'].'/pmwiki.php';
 
 } else {
-  $FarmPubDirUrl = $_SERVER['HTTP_HOST'].'/pub';
+  $FarmPubDirUrl = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/pub';
 }
 
 XLPage('de','PmWikiDe.XLPage');

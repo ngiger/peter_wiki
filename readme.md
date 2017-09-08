@@ -106,7 +106,6 @@ Aber das in systemd zu verpacken, das starten und stoppen kann ist etwas trickre
 
 Deshalb eine einfache Lösung, welche ihn nur aufstartet gefunden und in assets/peterwiki.service
 
-
 ### Backup
 
 * Siehe helpers/*. Diese Dateien sollten wie folgt aktiviert werden
@@ -123,3 +122,6 @@ Deshalb eine einfache Lösung, welche ihn nur aufstartet gefunden und in assets/
 
 * Log-Dateien von Apache2 archivieren und auswerten?
 
+# Gemachte Anpassungen
+
+Wenn `include_once("$FarmD/cookbook/edittoolbar/edittoolbar.php");` und `$EnableGUIButtons = 1;` vorkommen, werden die Buttons nicht angezeigt. Deshalb in allen config.php auf EnableGUIButtons auf 1 gesetzt.

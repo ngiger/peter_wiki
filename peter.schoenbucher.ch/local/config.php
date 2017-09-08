@@ -7,7 +7,7 @@ if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
   $ScriptUrl = $_SERVER['HTTP_X_FORWARDED_PROTO'].'://'.$_SERVER['HTTP_X_FORWARDED_HOST'].'/pmwiki/pmwiki.php';
 
 } else {
-  $FarmPubDirUrl = $_SERVER['HTTP_HOST'].'/pub';
+  $FarmPubDirUrl = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/pub';
 }
 
 $EnableDiag = 1;  # add ?action=ruleset to see cause for WARNING like Deprecated: preg_replace()
@@ -94,7 +94,7 @@ $DefaultPasswords['admin']='$1$QNrmTIef$OVE4mCLukepsIcPZ/0X0z/';
 ##  to enable these buttons, set $EnableGUIButtons to 1.  
 $EnableGUIButtons = 1;
 #include_once("$FarmD/cookbook/ajaxeditsupport.php");
-include_once("$FarmD/cookbook/edittoolbar/edittoolbar.php");
+#include_once("$FarmD/cookbook/edittoolbar/edittoolbar.php");
 
 ##  If you want uploads enabled on your system, set $EnableUpload=1.
 ##  You'll also need to set a default upload password, or else set

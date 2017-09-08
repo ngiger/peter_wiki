@@ -7,7 +7,7 @@ if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
   $ScriptUrl = $_SERVER['HTTP_X_FORWARDED_PROTO'].'://'.$_SERVER['HTTP_X_FORWARDED_HOST'].'/wk/pmwiki.php';
 
 } else {
-  $FarmPubDirUrl = $_SERVER['HTTP_HOST'].'/pub';
+  $FarmPubDirUrl = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/pub';
 }
 
 #2013-09-30 v sbu kopiert von peter.schoenbucher.ch
@@ -19,7 +19,7 @@ include_once("$FarmD/cookbook/counter.php");                       //seiten-edit
 #include_once('pub/fckeditor/FCKEditor/fckeditor.php');       // FCkEditor
 #include_once('cookbook/edit_fckeditor.php');                 // HTML -> Markup translator & wiki adapter 
 #include_once('cookbook/includeurl.php');                     // erlaubt fremde seiten einzuschliessen
-include_once("$FarmD/cookbook/edittoolbar/edittoolbar.php");
+# include_once("$FarmD/cookbook/edittoolbar/edittoolbar.php");
 
 ##  This is a sample config.php file.  To use this file, copy it to
 ##  local/config.php, then edit it for whatever customizations you want.
@@ -151,6 +151,7 @@ Markup("+", "inline", "/\\+(.+?)\\+/", "<b>$1</b>");    # +bold+
 
 ##  The following lines make additional editing buttons appear in the
 ##  edit page for subheadings, lists, tables, etc.
+
 $GUIButtons['h2'] = array(400, '\\n!! ', '\\n', '$[Heading]',
                      '$GUIButtonDirUrlFmt/h2.gif"$[Heading]"');
 $GUIButtons['h3'] = array(402, '\\n!!! ', '\\n', '$[Subheading]',

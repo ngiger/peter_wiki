@@ -20,6 +20,7 @@ PMWIKI_COOKBOOKS = [
   'http://www.pmwiki.org/pmwiki/uploads/Cookbook/e-protect.php',
   'http://www.pmwiki.org/pmwiki/uploads/Cookbook/includeurl.php',
   'http://www.pmwiki.org/pmwiki/uploads/Cookbook/counter.php',
+  'http://www.pmwiki.org/pmwiki/uploads/Cookbook/GUIButtons32.zip',
   'http://github.com/Nepherim/EditToolbar/zipball/master',
 ]
 
@@ -81,7 +82,7 @@ PMWIKI_COOKBOOKS.each do |cookbook|
     unless `#{cmd}`
       raise "Unable to execute #{cmd}"
     end
-    FileUtils.cp_r(Dir.glob("Nepherim-EditToolbar-*/cookbook/edittoolbar").first, '.', verbose: true)
+    # FileUtils.cp_r(Dir.glob("Nepherim-EditToolbar-*/cookbook/edittoolbar").first, '.', verbose: true)
     FileUtils.cp_r(Dir.glob("Nepherim-EditToolbar-*/pub/edittoolbar").first, '.', verbose: true)
   elsif /gz$/.match(fname)
     cmd = "tar -xvf #{fname}"
