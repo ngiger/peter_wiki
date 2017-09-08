@@ -87,9 +87,11 @@ Dann braucht im local/config.php etwa folgende Zeilen
       $FarmPubDirUrl = $_SERVER['HTTP_HOST'].'/pub';
     }
 
-### Probleme
+### Probleme/Pendenzen
 
 * In /peter.schoenbucher.ch/local/config.php wurde der Markup for google-search ausgeblendet, da er mit neueren Versionen von PHP nicht kompatibel sei.
+
+* Die Dateien unter  /home/web/hosts/www.schoenbucher.ch/public_html sollten bei Gelegenheit von Peter an eine korrekteren Ort verschoben werden
 
 ### Troubleshooting
 

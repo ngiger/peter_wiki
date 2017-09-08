@@ -221,3 +221,18 @@ Installation von systemd für die Wiki-Dockers
     systemctl start peterwiki
     systemctl status peterwiki
 
+#### 8. September 2017
+
+Alle Dateien aus ftp.schoenbucher.ch via ftp von mhs geholt und unter /home/web/hosts/www.schoenbucher.ch/public_html abgelegt. 
+
+    cd /home/web/hosts/www.schoenbucher.ch
+    cp -rpvu public_html/uploads .
+    cp -rpvu public_html/wiki.d .
+    cp -rpvu public_html/pub .
+    cp -rpvu public_html/local .
+    cp -rpvu public_html/.htaccess .
+    chown -R www-data:www-data uploads wiki.d uploads pub local
+    chown www-data:www-data  .. . .htaccess
+    mv pub wiki.d/ uploads/ local/ htdocs/
+
+Die restlichen sollten bei Gelegenheit von Peter an eine korrekteren Ort verschoben werden
