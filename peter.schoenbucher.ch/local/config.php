@@ -89,6 +89,8 @@ $Skin = 'peter';
 # ganz alt: $DefaultPasswords['admin']='$1$9gADOd5m$Hv45FzNFFNjIewWbxmMpN0';
 # alt: $DefaultPasswords['admin']='$1$r8V5oZUo$iH3Pb8ZENih/T79I7s8.6.';
 $DefaultPasswords['admin']='$1$QNrmTIef$OVE4mCLukepsIcPZ/0X0z/';
+$DefaultPasswords['edit']='$1$QNrmTIef$OVE4mCLukepsIcPZ/0X0z/';
+$DefaultPasswords['read']='';
 
 ##  PmWiki comes with graphical user interface buttons for editing;
 ##  to enable these buttons, set $EnableGUIButtons to 1.  

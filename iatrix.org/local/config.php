@@ -54,6 +54,8 @@ $SkinCopyright =  'kontakt: <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#1
 ## and PmWiki.PasswordsAdmin.
 # bis 2015-01-29 $DefaultPasswords['admin'] = crypt('$1$SeLL09KW$rrJroPod4FzxSUJ6u43uC.');
 $DefaultPasswords['admin']='$6$0n8wqZvVyDBp$JBeMlicJDDPLTMXsNOUFBVWgnLZsYzE7qv0gPEU7pRI.c0BVImb5dKOfTWCBVTziXB6i.KfyGR6wd9LWmk75q0';
+$DefaultPasswords['edit']='$6$0n8wqZvVyDBp$JBeMlicJDDPLTMXsNOUFBVWgnLZsYzE7qv0gPEU7pRI.c0BVImb5dKOfTWCBVTziXB6i.KfyGR6wd9LWmk75q0';
+$DefaultPasswords['read']='';
 
 ## Unicode (UTF-8) allows the display of all languages and all alphabets.
 # include_once("scripts/xlpage-utf-8.php");
