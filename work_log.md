@@ -236,3 +236,42 @@ Alle Dateien aus ftp.schoenbucher.ch via ftp von mhs geholt und unter /home/web/
     mv pub wiki.d/ uploads/ local/ htdocs/
 
 Die restlichen sollten bei Gelegenheit von Peter an eine korrekteren Ort verschoben werden
+
+#### 28. March 2018
+
+Auf Hetzner (via ssh root@peter.schoenbucher.ch)
+* Nochmals mit Hilfe von /root/get_mhs_via_ftp alles nach /opt/backup.ftp.schoenbucher.ch geholt
+* apt-get install certbot -t xenial-backports
+
+    systemctl stop apache2
+    certbot --expand -d iatrix.ch -d iatrix.org -d www.iatrix.ch -d www.iatrix.org -d test.iatrix.org
+    certbot --expand -d test.praxis.praxisunion.ch nextcloud.schoenbucher.ch test.praxisunion.ch test.www.praxisunion.ch
+    rm -rf /etc/letsencrypt/live/test.iatrix.org*
+    rm /etc/letsencrypt/renewal/test.iatrix.org-0001.conf /etc/letsencrypt/renewal/test.iatrix.org.conf
+    certbot certonly --cert-name testwww.schoenbucher.ch -d testpeter.schoenbucher.ch -d testwww.schoenbucher.ch -d test.www.schoenbucher.ch  -d nextcloud.schoenbucher.ch --standalone
+    systemctl start apache2
+    certbot certificates
+    Saving debug log to /var/log/letsencrypt/letsencrypt.log
+
+    -------------------------------------------------------------------------------
+    Found the following certs:
+      Certificate Name: iatrix.ch
+        Domains: iatrix.ch iatrix.org test.iatrix.org www.iatrix.ch www.iatrix.org
+        Expiry Date: 2018-06-26 09:03:19+00:00 (VALID: 89 days)
+        Certificate Path: /etc/letsencrypt/live/iatrix.ch/fullchain.pem
+        Private Key Path: /etc/letsencrypt/live/iatrix.ch/privkey.pem
+      Certificate Name: test.praxisunion.ch
+        Domains: test.praxis.praxisunion.ch nextcloud.schoenbucher.ch test.praxisunion.ch test.www.praxisunion.ch
+        Expiry Date: 2018-06-24 21:25:21+00:00 (VALID: 88 days)
+        Certificate Path: /etc/letsencrypt/live/test.praxisunion.ch/fullchain.pem
+        Private Key Path: /etc/letsencrypt/live/test.praxisunion.ch/privkey.pem
+      Certificate Name: testwww.schoenbucher.ch
+        Domains: testpeter.schoenbucher.ch test.www.schoenbucher.ch testwww.schoenbucher.ch
+        Expiry Date: 2018-06-26 10:39:13+00:00 (VALID: 89 days)
+        Certificate Path: /etc/letsencrypt/live/testwww.schoenbucher.ch/fullchain.pem
+        Private Key Path: /etc/letsencrypt/live/testwww.schoenbucher.ch/privkey.pem
+    -------------------------------------------------------------------------------
+* cd /home/web/hosts; cp -rpvu www.schoenbucher.ch/* www.praxisunion.ch/
+* Added support for  www.praxisunion.ch
+
+    

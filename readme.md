@@ -4,6 +4,13 @@ Die einzelne Schritte bei der Installation sind dokumentiert im [Worklog](work_l
 
 Hier werdeb die gefundene Lösung und die dazu notwendigen Entscheide dokumentiert.
 
+## Zustand vor 28.3.2018
+
+* DNS-Server läuft auf dns4.pro (Benutzername schoebu)
+* Praxis Internes Wiki, erreichbar unter praxis.praxisunion.ch läuft auf prxserver
+* http://www.schoenbucher.ch und http://www.praxisunion.ch laufen bei mhs (213.188.35.154)
+* https://testwww.schoenbucher.ch und https://test.www.praxisunion.ch laufen auf hetzner(94.130.75.222)
+
 # Installation
 
 * git clone https://github.com/ngiger/peter_wiki.git /opt/src/peter_wiki
