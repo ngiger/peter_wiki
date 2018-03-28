@@ -82,6 +82,25 @@ services:
       - $PWD/www.schoenbucher.ch/local:/home/web/host/htdocs/pmwiki/local
       - $PWD/www.schoenbucher.ch/local:/home/web/host/htdocs/local
 
+  wwwpraxisunion:
+    build: .
+    networks:
+      private:
+      public:
+    ports:
+      - 61980:80
+    volumes:
+      - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
+      - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
+      - /home/web/hosts/www.praxisunion.ch/htdocs:/home/web/host/htdocs
+      - /home/web/hosts/www.praxisunion.ch/htdocs/wiki.d:/home/web/host/htdocs/pmwiki/wiki.d
+      - $PWD/www.praxisunion.ch/index.php:/home/web/host/htdocs/index.php
+      - $PWD/www.praxisunion.ch/index.php:/home/web/host/htdocs/pmwiki/index.php
+      - $PWD/www.praxisunion.ch/skins/praxisunion:/home/web/host/htdocs/pmwiki/pub/skins/praxisunion
+      - $PWD/www.praxisunion.ch/skins/praxisunion:/home/web/host/htdocs/pub/skins/praxisunion
+      - $PWD/www.praxisunion.ch/local:/home/web/host/htdocs/pmwiki/local
+      - $PWD/www.praxisunion.ch/local:/home/web/host/htdocs/local
+
 networks:
   public:
   private:
