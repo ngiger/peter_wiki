@@ -10,6 +10,12 @@ if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
   $FarmPubDirUrl = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/pub';
 }
 
+## Unicode (UTF-8) allows the display of all languages and all alphabets.
+include_once($FarmD.'/scripts/xlpage-utf-8.php');
+$DefaultPageCharset = array(''=>'ISO-8859-1'); # see below
+## SPRACHE der Bedienungselemente: Deutsch 
+XLPage('de','PmWikiDe.XLPage');
+
 # print("Config.php für iatrix.org auf HOST ".$_SERVER['HTTP_HOST'].".<br>");
 # print("FarmPubD: $FarmPubD.<br>PubDirUrl ist $PubDirUrl<br>ScriptUrl ist $ScriptUrl<br>");
 
@@ -56,9 +62,6 @@ $SkinCopyright =  'kontakt: <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#1
 $DefaultPasswords['admin']='$6$0n8wqZvVyDBp$JBeMlicJDDPLTMXsNOUFBVWgnLZsYzE7qv0gPEU7pRI.c0BVImb5dKOfTWCBVTziXB6i.KfyGR6wd9LWmk75q0';
 $DefaultPasswords['edit']='$6$0n8wqZvVyDBp$JBeMlicJDDPLTMXsNOUFBVWgnLZsYzE7qv0gPEU7pRI.c0BVImb5dKOfTWCBVTziXB6i.KfyGR6wd9LWmk75q0';
 $DefaultPasswords['read']='';
-
-## Unicode (UTF-8) allows the display of all languages and all alphabets.
-# include_once("scripts/xlpage-utf-8.php");
 
 $EnableGUIButtons = 1;
 include_once("$FarmD/cookbook/edittoolbar/edittoolbar.php");

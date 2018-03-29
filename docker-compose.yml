@@ -96,8 +96,8 @@ services:
       - /home/web/hosts/www.praxisunion.ch/htdocs/wiki.d:/home/web/host/htdocs/pmwiki/wiki.d
       - $PWD/www.praxisunion.ch/index.php:/home/web/host/htdocs/index.php
       - $PWD/www.praxisunion.ch/index.php:/home/web/host/htdocs/pmwiki/index.php
-      - $PWD/www.praxisunion.ch/skins/praxisunion:/home/web/host/htdocs/pmwiki/pub/skins/praxisunion
-      - $PWD/www.praxisunion.ch/skins/praxisunion:/home/web/host/htdocs/pub/skins/praxisunion
+      - $PWD/www.schoenbucher.ch/skins/schoenbucher:/home/web/host/htdocs/pmwiki/pub/skins/schoenbucher
+      - $PWD/www.schoenbucher.ch/skins/schoenbucher:/home/web/host/htdocs/pub/skins/schoenbucher
       - $PWD/www.praxisunion.ch/local:/home/web/host/htdocs/pmwiki/local
       - $PWD/www.praxisunion.ch/local:/home/web/host/htdocs/local
 

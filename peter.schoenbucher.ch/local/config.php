@@ -10,6 +10,12 @@ if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
   $FarmPubDirUrl = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/pub';
 }
 
+## Unicode (UTF-8) allows the display of all languages and all alphabets.
+include_once($FarmD.'/scripts/xlpage-utf-8.php');
+$DefaultPageCharset = array(''=>'ISO-8859-1'); # see below
+## SPRACHE der Bedienungselemente: Deutsch 
+XLPage('de','PmWikiDe.XLPage');
+
 $EnableDiag = 1;  # add ?action=ruleset to see cause for WARNING like Deprecated: preg_replace()
 # googlesearch     directives       B>>>=            ! file: /home/web/host/htdocs/pmwiki/local/config.php, line: 181, pat: /\(:googlesearch:\)/e
 
@@ -185,10 +191,6 @@ Markup("'*", "inline", "/'\\*(.*?)\\*'/", "<b>$1</b>");    # '*bold*'
 ##  links that are allowed in a page (useful to control wikispam).
 # include_once('scripts/urlapprove.php');
 # $UnapprovedLinkCountMax = 10;
-
-## SPRACHE der Bedienungselemente 
-# Deutsche Sprache
-XLPage('de','PmWikiDe.XLPage');
 
 ## ToDo - add on (http://www.pmwiki.org/wiki/Cookbook/ToDo) 
 # variablen

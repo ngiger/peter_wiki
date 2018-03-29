@@ -11,10 +11,14 @@ if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
   $FarmPubDirUrl = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/pub';
 }
 
+## Unicode (UTF-8) allows the display of all languages and all alphabets.
+include_once($FarmD.'/scripts/xlpage-utf-8.php');
+$DefaultPageCharset = array(''=>'ISO-8859-1'); # see below
+## SPRACHE der Bedienungselemente: Deutsch 
 XLPage('de','PmWikiDe.XLPage');
 
 include_once($FarmD.'cookbook/includeurl.php');                     // erlaubt fremde seiten einzuschliessen
-include_once($FarmD.'cookbook/counter.php');                       //seiten-editier-zähler#'verschlüsselt' mail-adressen beim speichern einer seite automatisch:
+# include_once($FarmD.'cookbook/counter.php');                       //seiten-editier-zähler#'verschlüsselt' mail-adressen beim speichern einer seite automatisch:
 # TODO: Niklaus 08.09.201 e-protect.php führt zu Fehlern 
 # Warning: preg_replace(): The /e modifier is no longer supported, use preg_replace_callback instead in /home/web/shared_wiki/pmwiki.php on line 1723
 #  include_once($FarmD.'cookbook/e-protect.php');
@@ -161,7 +165,4 @@ Markup("'*", "inline", "/'\\*(.*?)\\*'/", "<b>$1</b>");    # '*bold*'
  $GUIButtons['table'] = array(600,
                        '||border=1 width=80%\\n||!Hdr ||!Hdr ||!Hdr ||\\n||     ||     ||     ||\\n||     ||     ||     ||\\n', '', '', 
                      '$GUIButtonDirUrlFmt/table.gif"$[Table]"');
-
-# Deutsche Sprache
-XLPage('de','PmWikiDe.XLPage');
 

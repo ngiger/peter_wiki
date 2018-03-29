@@ -10,6 +10,12 @@ if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
   $FarmPubDirUrl = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/pub';
 }
 
+## Unicode (UTF-8) allows the display of all languages and all alphabets.
+include_once($FarmD.'/scripts/xlpage-utf-8.php');
+$DefaultPageCharset = array(''=>'ISO-8859-1'); # see below
+## SPRACHE der Bedienungselemente: Deutsch 
+XLPage('de','PmWikiDe.XLPage');
+
 #2013-09-30 v sbu kopiert von peter.schoenbucher.ch
 #
 #include_once('cookbook/e-protect.php');                     //'verschluesselt' mail-adressen beim speichern einer seite automatisch: 
@@ -171,10 +177,6 @@ $GUIButtons['hr'] = array(540, '\\n----\\n', '', '',
 $GUIButtons['table'] = array(600,
                        '||border=1 width=80%\\n||!Hdr ||!Hdr ||!Hdr ||\\n||     ||     ||     ||\\n||     ||     ||     ||\\n', '', '', 
                      '$GUIButtonDirUrlFmt/table.gif"$[Table]"');
-
-## SPRACHE der Bedienungselemente 
-# Deutsche Sprache
-XLPage('de','PmWikiDe.XLPage');
 
 # Markup('googlesearch', 'directives', '/\\(:googlesearch:\\)/e',"Keep(\"
 #<FORM method=GET action='http://www.google.ch/search'>
