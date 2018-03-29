@@ -11,6 +11,16 @@ Hier werdeb die gefundene Lösung und die dazu notwendigen Entscheide dokumentie
 * http://www.schoenbucher.ch und http://www.praxisunion.ch laufen bei mhs (213.188.35.154)
 * https://testwww.schoenbucher.ch und https://test.www.praxisunion.ch laufen auf hetzner(94.130.75.222)
 
+## Anpassungen vom 29.3.2018
+
+* Folgende DNS-Einträge zeigen neu auf Hetzner
+** www.schoenbucher.ch
+** schoenbucher.ch
+** www.praxisunion.ch
+** praxisunion.ch
+
+Der Hinhalt von /home/web/hosts/www.schoenbucher.ch/ wurde auf /home/web/hosts/www.praxisunion.ch/ kopiert. http://www.praxisunion.ch und http://www.schoenbucher.ch sind ab jetzt separate Wikis!
+
 # Installation
 
 * git clone https://github.com/ngiger/peter_wiki.git /opt/src/peter_wiki
@@ -19,6 +29,24 @@ Hier werdeb die gefundene Lösung und die dazu notwendigen Entscheide dokumentie
 * Alle Verzeichniss /home/web/hosts/<xy>/htdocs müsse vorhanden sein
 * docker-compose create --build
 * docker-compose start iatrix peter # Stand 2.9.2017
+
+## Troubleshooting
+
+* http://peter.schoenbucher.ch:60080/local/phpinfo.php
+* Can you access https://peter.schoenbucher.ch/local/phpinfo.php? If yes is everything fine?
+* http://peter.schoenbucher.ch:60080/
+
+## Zertifikate für HTTPS
+
+Die Zertifikate wurden mit folgenden Befehlen aktualisiert (auf Hetzner)
+
+    certbot --expand -d iatrix.ch -d iatrix.org -d www.iatrix.ch -d www.iatrix.org -d test.iatrix.org
+    certbot --expand -d test.praxisunion.ch -d test.praxis.praxisunion.ch -d test.praxisunion.ch -d test.www.praxisunion.ch -d www.praxisunion.ch -d praxisunion.ch
+    certbot --expand -d testwww.schoenbucher.ch -d testpeter.schoenbucher.ch  -d nextcloud.schoenbucher.ch  -d test.www.schoenbucher.ch -d www.schoenbucher.ch
+
+Diese sollten automatisch jeden Monat (falls notwendig) akualisiert werden. Dazu dient das Script  /etc/cron.monthly/letsencrypt_renew, welche folgende Zeile enthält
+    certbot renew --apache 1>/dev/null
+
 
 # Entscheidungen
 
@@ -54,6 +82,13 @@ Ziele waren:
 * apache2/common.conf (für gleiche alle Docker-Instanzen)
 
 Damit sollten dann Unterschiede zwischen den verschiedenen Wiki-Seiten einfach gefunden und verstanden werden können.
+
+Zum Testen auf meinem lokalen Rechner brauche ich:
+* Eine Checkout diese Github-Projektes
+* Unter /home/web/hosts eine Kopie aller Ordner, z.B: www.schoenbucher.ch
+* Eine docker-Installation (mit docker-compose)
+* Starte eine Web-Seite wie folgt auf docker-compose up --build wwwschoenbucher
+* Gehe auf http://localhost:60980/ und teste
 
 #### Damit HTTPS auf Hetzner richtig läuft brauchte es folgende Anpassungen
 
@@ -97,14 +132,8 @@ Dann braucht im local/config.php etwa folgende Zeilen
 ### Probleme/Pendenzen
 
 * In /peter.schoenbucher.ch/local/config.php wurde der Markup for google-search ausgeblendet, da er mit neueren Versionen von PHP nicht kompatibel sei.
-
 * Die Dateien unter  /home/web/hosts/www.schoenbucher.ch/public_html sollten bei Gelegenheit von Peter an eine korrekteren Ort verschoben werden
-
-### Troubleshooting
-
-* http://peter.schoenbucher.ch:60080/local/phpinfo.php
-* Can you access https://peter.schoenbucher.ch/local/phpinfo.php? If yes is everything fine?
-* http://peter.schoenbucher.ch:60080/
+* www.praxisunion.ch referenziert noch ein paar http-links und erscheint deshalb nicht grün im Firefox
 
 ### Automatisches Aufstarten nach einem Reboot
 
@@ -122,8 +151,8 @@ Deshalb eine einfache Lösung, welche ihn nur aufstartet gefunden und in assets/
     cp -pvu helpers/*monthly /etc/cron.monthly
     cp -pvu helpers/letsencrypt_renew /etc/cron.monthly
 
-** Es werden mit Hilfe von Rsnapshot tägliche (30) und maximal 200 monatliche Backups von /etc/ und /home/web/hosts unter /opt/backup angelegt
-** Täglich gibt es rsync von /etc und /home/web/hosts/.git -> praxiserver -> /backup/hetzner/
+* Es werden mit Hilfe von Rsnapshot tägliche (30) und maximal 200 monatliche Backups von /etc/ und /home/web/hosts unter /opt/backup angelegt
+* Täglich gibt es rsync von /etc und /home/web/hosts/.git -> praxiserver -> /backup/hetzner/
 
 # Ideen
 

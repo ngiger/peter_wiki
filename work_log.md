@@ -244,34 +244,35 @@ Auf Hetzner (via ssh root@peter.schoenbucher.ch)
 * apt-get install certbot -t xenial-backports
 
     systemctl stop apache2
-    certbot --expand -d iatrix.ch -d iatrix.org -d www.iatrix.ch -d www.iatrix.org -d test.iatrix.org
-    certbot --expand -d test.praxis.praxisunion.ch nextcloud.schoenbucher.ch test.praxisunion.ch test.www.praxisunion.ch
-    rm -rf /etc/letsencrypt/live/test.iatrix.org*
-    rm /etc/letsencrypt/renewal/test.iatrix.org-0001.conf /etc/letsencrypt/renewal/test.iatrix.org.conf
-    certbot certonly --cert-name testwww.schoenbucher.ch -d testpeter.schoenbucher.ch -d testwww.schoenbucher.ch -d test.www.schoenbucher.ch  -d nextcloud.schoenbucher.ch --standalone
-    systemctl start apache2
-    certbot certificates
-    Saving debug log to /var/log/letsencrypt/letsencrypt.log
 
-    -------------------------------------------------------------------------------
-    Found the following certs:
-      Certificate Name: iatrix.ch
-        Domains: iatrix.ch iatrix.org test.iatrix.org www.iatrix.ch www.iatrix.org
-        Expiry Date: 2018-06-26 09:03:19+00:00 (VALID: 89 days)
-        Certificate Path: /etc/letsencrypt/live/iatrix.ch/fullchain.pem
-        Private Key Path: /etc/letsencrypt/live/iatrix.ch/privkey.pem
-      Certificate Name: test.praxisunion.ch
-        Domains: test.praxis.praxisunion.ch nextcloud.schoenbucher.ch test.praxisunion.ch test.www.praxisunion.ch
-        Expiry Date: 2018-06-24 21:25:21+00:00 (VALID: 88 days)
-        Certificate Path: /etc/letsencrypt/live/test.praxisunion.ch/fullchain.pem
-        Private Key Path: /etc/letsencrypt/live/test.praxisunion.ch/privkey.pem
-      Certificate Name: testwww.schoenbucher.ch
-        Domains: testpeter.schoenbucher.ch test.www.schoenbucher.ch testwww.schoenbucher.ch
-        Expiry Date: 2018-06-26 10:39:13+00:00 (VALID: 89 days)
-        Certificate Path: /etc/letsencrypt/live/testwww.schoenbucher.ch/fullchain.pem
-        Private Key Path: /etc/letsencrypt/live/testwww.schoenbucher.ch/privkey.pem
-    -------------------------------------------------------------------------------
+* Die Zertifikate wurden mit folgenden Befehlen aktualisiert (auf Hetzner)
+
+    certbot --expand -d iatrix.ch -d iatrix.org -d www.iatrix.ch -d www.iatrix.org -d test.iatrix.org
+    certbot --expand -d test.praxisunion.ch -d test.praxis.praxisunion.ch -d test.praxisunion.ch -d test.www.praxisunion.ch -d www.praxisunion.ch -d praxisunion.ch
+    certbot --expand -d testwww.schoenbucher.ch -d testpeter.schoenbucher.ch  -d nextcloud.schoenbucher.ch  -d test.www.schoenbucher.ch -d www.schoenbucher.ch
 * cd /home/web/hosts; cp -rpvu www.schoenbucher.ch/* www.praxisunion.ch/
 * Added support for  www.praxisunion.ch
 
-    
+     sudo -u www-data cp -rv /opt/backup.ftp.schoenbucher.ch/public_html/uploads /home/web/hosts/www.schoenbucher.ch
+     sudo -u www-data cp -rv /opt/backup.ftp.schoenbucher.ch/public_html/uploads /home/web/hosts/www.praxisunion.ch
+     cp -rpvu /opt/backup.ftp.schoenbucher.ch/public_html/uploads/ /home/web/hosts/www.schoenbucher.ch/htdocs/
+
+* Auf hetzner fehlt der Ordner /home/web/hosts/praxis.praxisunion.ch/htdocs/wk/uploads/PrxDoku Geholt via
+
+    rsync -avz -e "ssh -p 4444 " sbu@praxis.praxisunion.ch:/home/web/hosts/praxis.praxisunion.ch/htdocs/wk/uploads /home/web/hosts/praxis.praxisunion.ch/htdocs/
+
+*  wikis für Hompages von praxisunion und schoenbucher getrennt. Daten leben jetzt unter
+** /home/web/hosts/www.schoenbucher.ch
+** /home/web/hosts/www.praxisunion.ch
+
+* dns4pro Einträge angepasst (mhs -> hetzner)
+
+* Anpassungen in local/config.php
+** Passwort zum Editieren überall auf gleiches wie für admin gesetzt
+** Passwort für read (anschauen) überall auf '' (d.h. keines) gesetzt
+** utf-8 enabled
+** XLpage Deutsch für Bedienanleitung
+
+* https://test.praxis.praxisunion.ch läuft (mit alten Daten vom September 2017)
+
+* Zertifikat für https://nextcloud.schoenbucher.ch/nextcloud/index.php/login korrigiert. Gleiches wie schoenbucher.ch
