@@ -14,10 +14,10 @@ Hier werdeb die gefundene Lösung und die dazu notwendigen Entscheide dokumentie
 ## Anpassungen vom 29.3.2018
 
 * Folgende DNS-Einträge zeigen neu auf Hetzner
-** www.schoenbucher.ch
-** schoenbucher.ch
-** www.praxisunion.ch
-** praxisunion.ch
+  * www.schoenbucher.ch
+  * schoenbucher.ch
+  * www.praxisunion.ch
+  * praxisunion.ch
 
 Der Hinhalt von /home/web/hosts/www.schoenbucher.ch/ wurde auf /home/web/hosts/www.praxisunion.ch/ kopiert. http://www.praxisunion.ch und http://www.schoenbucher.ch sind ab jetzt separate Wikis!
 
@@ -54,7 +54,7 @@ Diese sollten automatisch jeden Monat (falls notwendig) akualisiert werden. Dazu
 
 Kriterien: 
 
-* PHP5 support (on wheezy we have 5.4.45-0+deb7u9 installed. Fand in /backup/weekly.1/localhost/home/web/hosts/peter.schoenbucher.ch/logs/ keine Deprecated gefunden,
+* PHP5 support (on wheezy we have 5.4.45-0+deb7u9 installed. Fand in /`backup/weekly.1/localhost/home/web/hosts/peter.schoenbucher.ch/logs/` keine Deprecated gefunden,
     das gibt es erst seit http://php.net/manual/en/migration55.deprecated.php)
 * NGINX
 
@@ -67,17 +67,21 @@ Ziele waren:
 * pmwiki via Script zu installieren
 * PM-Wiki installation in git aufgenommen
 * /home/web/hosts als git repository initalisiert. Dazu auf Hetzner folgende Kommandos ausgeführt
+
     cd /home/web/hosts/
     git init .
     git add *
     git commit -m "Erster import"
+
 * $ScriptUrl und $PubDirUrl sollen den Server-Namen enthalten und keine absoluten Namen wie 'https://praxis.praxisunion.ch/pub';
+
     $ScriptUrl = 'http://'.$_SERVER['HTTP_HOST'].'/pmwiki/pmwiki.php';
     $PubDirUrl = 'http://'.$_SERVER['HTTP_HOST'].'/pmwiki/pub';
+    
 * skins und config.php werden hier local verwaltet, z.B.
-** org.iatrix/local/config.php
-** peter.schoenbucher.ch/skins/peter
-** praxis.praxisunion.ch/skins/sub
+  * org.iatrix/local/config.php
+  * peter.schoenbucher.ch/skins/peter
+  * praxis.praxisunion.ch/skins/sub
 * apache2/rewrite_wikis.conf (für den Host)
 * apache2/common.conf (für gleiche alle Docker-Instanzen)
 
@@ -110,21 +114,23 @@ Die Docker loggen entweder nichts, via syslog oder in ein json file. Das ist and
 welche /var/log/apache/access_log  in ein Host-File umleiten gelöst werden. Dafür sieht man dann via docker-compose logs nix mehr.
 
 Damit auf Hetzner alles richtig läuft braucht es dort den Eintrag `RequestHeader set X-Forwarded-Proto "https"` in der VirtualHost-Section des Apache-Conf. Weiter muss die (im internen Netz von Hetzner gebrauchte IP-Adresse von eth0, im Moment 172.31.1.100) dort wie folgt für HTTPS gebraucht werden
+
     <VirtualHost 172.31.1.100:443>
       ServerName peter.schoenbucher.ch
 
 Diese Datei wird ebenfalls hier verwaltet und wurde wie folgt aktiviert
+
     cp -pvu apache2/rewrite_wikis.conf /etc/apache2/sites-available/rewrite_wikis.conf
     systemctl restart apache2; systemctl status apache2
     
 Dann braucht im local/config.php etwa folgende Zeilen
+
     $FarmPubD = '/home/web/shared_wiki/';
     $FarmD    = '/home/web/shared_wiki/';
     if ( $_SERVER['HTTP_X_FORWARDED_HOST'] ) {
       $_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'];
       $PubDirUrl = $_SERVER['HTTP_X_FORWARDED_PROTO'].'://'.$_SERVER['HTTP_X_FORWARDED_HOST'].'/pub';
       $ScriptUrl = $_SERVER['HTTP_X_FORWARDED_PROTO'].'://'.$_SERVER['HTTP_X_FORWARDED_HOST'].'/pmwiki.php';
-
     } else {
       $FarmPubDirUrl = $_SERVER['HTTP_HOST'].'/pub';
     }
@@ -146,10 +152,10 @@ Deshalb eine einfache Lösung, welche ihn nur aufstartet gefunden und in assets/
 
 * Siehe helpers/*. Diese Dateien sollten wie folgt aktiviert werden
 
-    cp -pvu helpers/rsnapshot.conf.hetzner helpers/rsync.exclude /etc
-    cp -pvu helpers/*daily /etc/cron.daily
-    cp -pvu helpers/*monthly /etc/cron.monthly
-    cp -pvu helpers/letsencrypt_renew /etc/cron.monthly
+      cp -pvu helpers/rsnapshot.conf.hetzner helpers/rsync.exclude /etc
+      cp -pvu helpers/*daily /etc/cron.daily
+      cp -pvu helpers/*monthly /etc/cron.monthly
+      cp -pvu helpers/letsencrypt_renew /etc/cron.monthly
 
 * Es werden mit Hilfe von Rsnapshot tägliche (30) und maximal 200 monatliche Backups von /etc/ und /home/web/hosts unter /opt/backup angelegt
 * Täglich gibt es rsync von /etc und /home/web/hosts/.git -> praxiserver -> /backup/hetzner/

@@ -63,10 +63,10 @@ Vergebliche Versuche mein Modul zum Laufen zu bringen
 
 ### Aufsetzen des  /home/web/hosts/docker.schoenbucher.ch/
 
-rsync -av /backup/daily.5/localhost/home/web/hosts/peter.schoenbucher.ch/htdocs/ /home/web/hosts/docker.schoenbucher.ch/htdocs/
-rsync -av /backup/daily.5/localhost/home/web/pmwiki-2.2.70/ /home/web/hosts/docker.schoenbucher.ch/pmwiki-2.2.70/
-rsync -av /backup/daily.5/localhost/home/web/shared_wiki/ /home/web/hosts/docker.schoenbucher.ch/shared_wiki/
-
+      rsync -av /backup/daily.5/localhost/home/web/hosts/peter.schoenbucher.ch/htdocs/ /home/web/hosts/docker.schoenbucher.ch/htdocs/
+      rsync -av /backup/daily.5/localhost/home/web/pmwiki-2.2.70/ /home/web/hosts/docker.schoenbucher.ch/pmwiki-2.2.70/
+      rsync -av /backup/daily.5/localhost/home/web/shared_wiki/ /home/web/hosts/docker.schoenbucher.ch/shared_wiki/
+      
       - /backup/daily.5/localhost/home/web/pmwiki-2.2.70:/home/web/pmwiki-2.2.70
       - /backup/daily.5/localhost/home/web/shared_wiki:/home/web/shared_wiki
       - /backup/weekly.3/localhost/home/web/shared_wiki/cookbook:/home/web/shared_wiki/cookbook/
@@ -79,7 +79,8 @@ http://prxserver:6543/pmwiki/index.php/Public/Cams?from=Main.HomePage
 ## 18. August 2017: Log des Aufsetzen von Peters Server unter 94.130.75.222 (Hetzner)
 
 * Unter https://dns4.pro/ folgende Namen auf 94.130.75.222 weiterleiten: test_www.schoenbucher.ch test_peter.schoenbucher.ch test.iatrix.org test_www.iatrix.org* Peter gab mir root Zugang via /root/.ssh/authorized_keys
-* Pakete installiert via
+
+### Pakete installiert via
 
     apt-get update
     apt-get install etckeeper git vim-nox htop iotop fish docker-compose docker.io letsencrypt
@@ -98,7 +99,7 @@ http://prxserver:6543/pmwiki/index.php/Public/Cams?from=Main.HomePage
     // Congratulations! Your certificate and chain have been saved at /etc/letsencrypt/live/testwww.schoenbucher.ch/fullchain.pem.  Your cert will expire on 2017-11-16. 
 
 
-* Als Benutzer niklaus folgendes gemacht
+### Als Benutzer niklaus folgendes gemacht
 
     git config --global user.email 'niklaus.giger@member.fsf.org'
     git config --global user.name "Niklaus Giger"
@@ -243,23 +244,28 @@ Auf Hetzner (via ssh root@peter.schoenbucher.ch)
 * Nochmals mit Hilfe von /root/get_mhs_via_ftp alles nach /opt/backup.ftp.schoenbucher.ch geholt
 * apt-get install certbot -t xenial-backports
 
-    systemctl stop apache2
+    `systemctl stop apache2`
 
 * Die Zertifikate wurden mit folgenden Befehlen aktualisiert (auf Hetzner)
 
-    certbot --expand -d iatrix.ch -d iatrix.org -d www.iatrix.ch -d www.iatrix.org -d test.iatrix.org
-    certbot --expand -d test.praxisunion.ch -d test.praxis.praxisunion.ch -d test.praxisunion.ch -d test.www.praxisunion.ch -d www.praxisunion.ch -d praxisunion.ch
-    certbot --expand -d testwww.schoenbucher.ch -d testpeter.schoenbucher.ch  -d nextcloud.schoenbucher.ch  -d test.www.schoenbucher.ch -d www.schoenbucher.ch
+    `certbot --expand -d iatrix.ch -d iatrix.org -d www.iatrix.ch -d www.iatrix.org -d test.iatrix.org`
+    
+    `certbot --expand -d test.praxisunion.ch -d test.praxis.praxisunion.ch -d test.praxisunion.ch -d test.www.praxisunion.ch -d www.praxisunion.ch -d praxisunion.ch`
+    
+    `certbot --expand -d testwww.schoenbucher.ch -d testpeter.schoenbucher.ch  -d nextcloud.schoenbucher.ch  -d test.www.schoenbucher.ch -d www.schoenbucher.ch`
+    
 * cd /home/web/hosts; cp -rpvu www.schoenbucher.ch/* www.praxisunion.ch/
 * Added support for  www.praxisunion.ch
 
-     sudo -u www-data cp -rv /opt/backup.ftp.schoenbucher.ch/public_html/uploads /home/web/hosts/www.schoenbucher.ch
-     sudo -u www-data cp -rv /opt/backup.ftp.schoenbucher.ch/public_html/uploads /home/web/hosts/www.praxisunion.ch
-     cp -rpvu /opt/backup.ftp.schoenbucher.ch/public_html/uploads/ /home/web/hosts/www.schoenbucher.ch/htdocs/
+     `sudo -u www-data cp -rv /opt/backup.ftp.schoenbucher.ch/public_html/uploads /home/web/hosts/www.schoenbucher.ch`
+     
+     `sudo -u www-data cp -rv /opt/backup.ftp.schoenbucher.ch/public_html/uploads /home/web/hosts/www.praxisunion.ch`
+     
+     `cp -rpvu /opt/backup.ftp.schoenbucher.ch/public_html/uploads/ /home/web/hosts/www.schoenbucher.ch/htdocs/`
 
 * Auf hetzner fehlt der Ordner /home/web/hosts/praxis.praxisunion.ch/htdocs/wk/uploads/PrxDoku Geholt via
 
-    rsync -avz -e "ssh -p 4444 " sbu@praxis.praxisunion.ch:/home/web/hosts/praxis.praxisunion.ch/htdocs/wk/uploads /home/web/hosts/praxis.praxisunion.ch/htdocs/
+    `rsync -avz -e "ssh -p 4444 " sbu@praxis.praxisunion.ch:/home/web/hosts/praxis.praxisunion.ch/htdocs/wk/uploads /home/web/hosts/praxis.praxisunion.ch/htdocs/`
 
 *  wikis für Hompages von praxisunion und schoenbucher getrennt. Daten leben jetzt unter
 ** /home/web/hosts/www.schoenbucher.ch
@@ -268,10 +274,10 @@ Auf Hetzner (via ssh root@peter.schoenbucher.ch)
 * dns4pro Einträge angepasst (mhs -> hetzner)
 
 * Anpassungen in local/config.php
-** Passwort zum Editieren überall auf gleiches wie für admin gesetzt
-** Passwort für read (anschauen) überall auf '' (d.h. keines) gesetzt
-** utf-8 enabled
-** XLpage Deutsch für Bedienanleitung
+  * Passwort zum Editieren überall auf gleiches wie für admin gesetzt
+  * Passwort für read (anschauen) überall auf '' (d.h. keines) gesetzt
+  * utf-8 enabled
+  * XLpage Deutsch für Bedienanleitung
 
 * https://test.praxis.praxisunion.ch läuft (mit alten Daten vom September 2017)
 
