@@ -19,7 +19,7 @@ XLPage('de','PmWikiDe.XLPage');
 #2013-09-30 v sbu kopiert von peter.schoenbucher.ch
 #
 #include_once('cookbook/e-protect.php');                     //'verschluesselt' mail-adressen beim speichern einer seite automatisch: 
-include_once("$FarmD/cookbook/counter.php");                       //seiten-editier-zähler
+# include_once("$FarmD/cookbook/counter.php");                       //seiten-editier-zähler
 #include_once('cookbook/XToDo.php');                         //x todo 
 #include_once('cookbook/googlecalendar.php');                 // google-calender einbinden
 #include_once('pub/fckeditor/FCKEditor/fckeditor.php');       // FCkEditor

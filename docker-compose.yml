@@ -56,7 +56,6 @@ services:
       - $PWD/apache2/common.conf:/etc/apache2/sites-available/000-default.conf
       - $PWD/pmwiki-2.2.102:/home/web/shared_wiki
       - /home/web/hosts/praxis.praxisunion.ch/htdocs:/home/web/host/htdocs  
-      - $PWD/praxis.praxisunion.ch/index.html:/home/web/host/htdocs/index.html
       - $PWD/praxis.praxisunion.ch/index.php:/home/web/host/htdocs/index.php
       - $PWD/praxis.praxisunion.ch/wk/index.php:/home/web/host/htdocs/wk/pmwiki.php
       - $PWD/praxis.praxisunion.ch/wk/index.php:/home/web/host/htdocs/wk/index.php
