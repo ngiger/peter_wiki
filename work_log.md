@@ -282,3 +282,11 @@ Auf Hetzner (via ssh root@peter.schoenbucher.ch)
 * https://test.praxis.praxisunion.ch läuft (mit alten Daten vom September 2017)
 
 * Zertifikat für https://nextcloud.schoenbucher.ch/nextcloud/index.php/login korrigiert. Gleiches wie schoenbucher.ch
+
+#### 31. March 2018
+
+* Die Zertifikate wurden mit folgenden Befehlen aktualisiert (auf Hetzner)
+
+    `certbot --expand -d testwww.schoenbucher.ch -d testpeter.schoenbucher.ch  -d nextcloud.schoenbucher.ch  -d test.www.schoenbucher.ch -d www.schoenbucher.ch -d peter.schoenbucher.ch -d testpeter.schoenbucher.ch`
+
+* apache2/rewrite_wikis.conf korrigiert damit alle schoenbucher https seine das /etc/letsencrypt/live/testwww.schoenbucher.ch gebrauchen
