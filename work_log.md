@@ -290,3 +290,15 @@ Auf Hetzner (via ssh root@peter.schoenbucher.ch)
     `certbot --expand -d testwww.schoenbucher.ch -d testpeter.schoenbucher.ch  -d nextcloud.schoenbucher.ch  -d test.www.schoenbucher.ch -d www.schoenbucher.ch -d peter.schoenbucher.ch -d testpeter.schoenbucher.ch`
 
 * apache2/rewrite_wikis.conf korrigiert damit alle schoenbucher https seine das /etc/letsencrypt/live/testwww.schoenbucher.ch gebrauchen
+* `cd /opt/src/peter_wiki && git checkout 5c38725863720569377c70d44f872d0c24d356bf peter.schoenbucher.ch/local/config.php`
+
+
+#### 04. April 2018
+
+Auf Hetzner
+
+    `git clone /opt/backup/daily.9/hetzner/home/web/hosts/ /opt/recover/`
+    `diff -r --brief /opt/recover/peter.schoenbucher.ch/htdocs /home/web/hosts/peter.schoenbucher.ch/htdocs`
+    # Zeigt viele Dateiene wie Only in /opt/recover/peter.schoenbucher.ch/htdocs/wiki.d: SoldOutTicketsRequired.RecentChanges
+    `cp -rv /opt/recover/peter.schoenbucher.ch/htdocs /home/web/hosts/peter.schoenbucher.ch/`
+    `chown -R www-data:www-data /home/web/hosts/peter.schoenbucher.ch/`
