@@ -146,7 +146,14 @@ Dann braucht im local/config.php etwa folgende Zeilen
 Das ist anscheinend Trickreich. Auf der Kommandozeile geht `cd /opt/src/peter_wiki; docker-compose up -d` ohne Probleme.
 Aber das in systemd zu verpacken, das starten und stoppen kann ist etwas trickreich.
 
-Deshalb eine einfache Lösung, welche ihn nur aufstartet gefunden und in assets/peterwiki.service
+Deshalb eine einfache Lösung, welche ihn nur aufstartet gefunden und in assets/peterwiki.service, welche nach /etc/systemd/system/peterwiki.service kopiert wird.
+
+Folgende Schritte können nach einem Upgrade z.B. Docker notwendig sein.
+* systemctl daemon-reload # Damit wird sicher gestellt, dass systemctl alle Dateien unter /etc/systemd neu lädt.
+* systemctl restart docker # Nur wen docker ps keine Prozesse anzeigt
+* systemctl start peterwiki #
+* systemctl reload apache2
+* Manuell testen, dass https://peter.schoenbucher.ch erreichbar ist
 
 ### Backup
 
