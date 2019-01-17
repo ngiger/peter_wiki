@@ -26,7 +26,7 @@ if (!defined('PmWiki')) exit();
 ##  to PmWiki. 
 
 ##  $WikiTitle is the name that appears in the browser's title bar.
-$WikiTitle = 'schoebus homepage (Docker)';
+$WikiTitle = 'schoebus private homepage';
 ##  $ScriptUrl is your prleferred URL for accessing wiki pages
 ##  $PubDirUrl is the URL for the pub directory.
 # $ScriptUrl = 'http://www.mydomain.com/path/to/pmwiki.php';
@@ -89,6 +89,9 @@ $Skin = 'peter';
 # ganz alt: $DefaultPasswords['admin']='$1$9gADOd5m$Hv45FzNFFNjIewWbxmMpN0';
 # alt: $DefaultPasswords['admin']='$1$r8V5oZUo$iH3Pb8ZENih/T79I7s8.6.';
 $DefaultPasswords['admin']='$1$QNrmTIef$OVE4mCLukepsIcPZ/0X0z/';
+  $rc = FmtPageName('$Group.RecentChanges', $pagename);
+    if (!PageExists($rc))
+      $DefaultPasswords['edit'] = $DefaultPasswords['admin'];
 
 ##  PmWiki comes with graphical user interface buttons for editing;
 ##  to enable these buttons, set $EnableGUIButtons to 1.  
@@ -102,15 +105,15 @@ $EnableGUIButtons = 1;
 ##  see PmWiki.UploadsAdmin.
 $EnableUpload = 1;
 $UploadExts['tif'] = 'application/tif';      # erweiterung durch sbu 
-$UploadMaxSize = 100000;                     # heraufgesetzt durch sbu 
+# $UploadMaxSize = 100000;                     # heraufgesetzt durch sbu, ausgeschaltet 2019
 # $DefaultPasswords['upload'] = crypt(' ');
-#  $DefaultPasswords['upload']='$1$SeLL09KW$rrJroPod4FzxSUJ6u43uC.';
+# $DefaultPasswords['upload']='$1$SeLL09KW$rrJroPod4FzxSUJ6u43uC.';
 
 
 ##  Setting $EnableDiag turns on the ?action=diag and ?action=phpinfo
 ##  actions, which often helps the PmWiki authors to troubleshoot 
 ##  various configuration and execution problems.
-#$EnableDiag = 1;                         # enable remote diagnostics
+$EnableDiag = 1;                         # enable remote diagnostics
 
 ##  By default, PmWiki doesn't allow browsers to cache pages.  Setting
 ##  $EnableIMSCaching=1; will re-enable browser caches in a somewhat
@@ -122,9 +125,8 @@ $UploadMaxSize = 100000;                     # heraufgesetzt durch sbu
 ##  have spaces before each sequence of capital letters.
 $SpaceWikiWords = 0;                     # turn on WikiWord spacing
 
-
 ##  Set $LinkWikiWords if you want to allow WikiWord links.
-#$LinkWikiWords = 1;                      # enable WikiWord links
+$LinkWikiWords = 1;                      # enable WikiWord links als Test
 
 ##  If you want only the first occurrence of a WikiWord to be converted
 ##  to a link, set $WikiWordCountMax=1.
