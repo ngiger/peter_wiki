@@ -57,11 +57,12 @@ $WikiTitle = 'schoebus private homepage';
 $EnablePathInfo = 1;
 
 #includes
-include_once("$FarmD/cookbook/includeurl.php");                     // erlaubt fremde seiten einzuschliessen
+include_once("$FarmD/cookbook/includeurl.php");  // erlaubt fremde seiten einzuschliessen
 ## geht ni me 2015
-#include_once("$FarmD/cookbook/XToDo.php");                //x todo 
-#include_once("$FarmD/cookbook/counter.php");              //seiten-editier-zähler 
+#include_once("$FarmD/cookbook/XToDo.php");       //x todo 
+include_once("$FarmD/cookbook/counter.php");          //seiten-editier-zähler 
 #include_once("$FarmD/cookbook/googlecalendar.php");              // google-calender einbinden
+
 ## verzichtet 2015
 # include_once("$FarmD/pub/fckeditor/FCKEditor/fckeditor.php");       // FCkEditor
 # include_once("$FarmD/cookbook/edit_fckeditor.php");                 // HTML -> Markup translator & wiki adapter 
@@ -105,7 +106,7 @@ $EnableGUIButtons = 1;
 ##  see PmWiki.UploadsAdmin.
 $EnableUpload = 1;
 $UploadExts['tif'] = 'application/tif';      # erweiterung durch sbu 
-# $UploadMaxSize = 100000;                     # heraufgesetzt durch sbu, ausgeschaltet 2019
+# $UploadMaxSize = 100000;                  # heraufgesetzt durch sbu, ausgeschaltet 2019
 # $DefaultPasswords['upload'] = crypt(' ');
 # $DefaultPasswords['upload']='$1$SeLL09KW$rrJroPod4FzxSUJ6u43uC.';
 
@@ -123,10 +124,10 @@ $EnableDiag = 1;                         # enable remote diagnostics
 
 ##  Set $SpaceWikiWords if you want WikiWords to automatically 
 ##  have spaces before each sequence of capital letters.
-$SpaceWikiWords = 0;                     # turn on WikiWord spacing
+#$SpaceWikiWords = 0;                     # turn on WikiWord spacing
 
 ##  Set $LinkWikiWords if you want to allow WikiWord links.
-$LinkWikiWords = 1;                      # enable WikiWord links als Test
+#$LinkWikiWords = 1;                      # enable WikiWord links als Test
 
 ##  If you want only the first occurrence of a WikiWord to be converted
 ##  to a link, set $WikiWordCountMax=1.
@@ -153,17 +154,17 @@ $LinkWikiWords = 1;                      # enable WikiWord links als Test
 
 ##  $DiffKeepDays specifies the minimum number of days to keep a page's
 ##  revision history.  The default is 3650 (approximately 10 years).
-#$DiffKeepDays=999;                        # keep page history at least 30 days
+$DiffKeepDays=999;                        # keep page history at least 30 days
 
 ## By default, viewers are able to see the names (but not the
 ## contents) of read-protected pages in search results and
 ## page listings.  Set $EnablePageListProtect to keep read-protected
 ## pages from appearing in search results.
-# $EnablePageListProtect = 1;
+$EnablePageListProtect = 1;
 
 ##  The refcount.php script enables ?action=refcount, which helps to
 ##  find missing and orphaned pages.  See PmWiki.RefCount.
-# if ($action == 'refcount') include_once('scripts/refcount.php');
+#if ($action == 'refcount') include_once('scripts/refcount.php'); #probehalber 2019
 
 ##  The feeds.php script enables ?action=rss, ?action=atom, ?action=rdf,
 ##  and ?action=dc, for generation of syndication feeds in various formats.
@@ -176,15 +177,15 @@ $LinkWikiWords = 1;                      # enable WikiWord links als Test
 ##  To add support for '*bold*' and '~italic~' markup (the single quotes
 ##  are part of the markup), uncomment the following lines. 
 ##  (See PmWiki.CustomMarkup and the Cookbook for details and examples.)
-Markup("'~", "inline", "/'~(.*?)~'/", "<i>$1</i>");        # '~italic~'
-Markup("'*", "inline", "/'\\*(.*?)\\*'/", "<b>$1</b>");    # '*bold*'
+#Markup("'~", "inline", "/'~(.*?)~'/", "<i>$1</i>");        # '~italic~'
+#Markup("'*", "inline", "/'\\*(.*?)\\*'/", "<b>$1</b>");    # '*bold*'
 
-##  If you want to have to approve links to external sites before they
+##  If you want to have to APPROVE LINKS to external sites before they
 ##  are turned into links, uncomment the line below.  See PmWiki.UrlApprovals.
 ##  Also, setting $UnapprovedLinkCountMax limits the number of unapproved
 ##  links that are allowed in a page (useful to control wikispam).
 # include_once('scripts/urlapprove.php');
-# $UnapprovedLinkCountMax = 10;
+# $UnapprovedLinkCount5~lMax = 10;
 
 ## SPRACHE der Bedienungselemente 
 # Deutsche Sprache
@@ -192,25 +193,25 @@ XLPage('de','PmWikiDe.XLPage');
 
 ## ToDo - add on (http://www.pmwiki.org/wiki/Cookbook/ToDo) 
 # variablen
-$todo_category_names = array('Kriens', 'Praxis', 'andere');
-$todo_owner_names = array('sbu', 'mpa', 'andere');
-$HTMLStylesFmt['todo'] = <<< EOT
-.todo-form { border: none; }
-.todo-form tr td { border: none; font-weight: plain; 
-    text-align: left; padding: 4px; }
-.todo-form tr td.heading { text-align: right; 
-    width: 140px; padding-right: 6px; }
-table.todo-list { border: 2px solid #ccc; }
-table.todo-list tr.row1 { background-color: #eee; color: #555; }
-table.todo-list tr.row1 td { border-bottom: 2px solid #ccc; }
-table.todo-list tr:last-child.row1 td { border-bottom: none; }
-table.todo-list th { background-color: #ddd; padding: 3px; 
-    font-weight: normal; border: 1px solid #ccc; color: #444; }
-table.todo-list tr td { color: #666; }
-table.todo-simple-list tr td { border: none; padding: 4px; }
-.todo-category-text { color: #666; border-bottom: 1px solid #ccc; }
-.todo-description-text { color: #444; }
-.todo-overdue-text { color: #f66; border-bottom: 1px solid #ccc; }
-.todo-completed-text { color: #446600; border-bottom: 1px solid #ccc; }
-.todo-legend { text-align: center; color: #555; font-size: smaller; }
-EOT;
+#$todo_category_names = array('Kriens', 'Praxis', 'andere');
+#$todo_owner_names = array('sbu', 'mpa', 'andere');
+#$HTMLStylesFmt['todo'] = <<< EOT
+#.todo-form { border: none; }
+#.todo-form tr td { border: none; font-weight: plain; 
+#    text-align: left; padding: 4px; }
+#.todo-form tr td.heading { text-align: right; 
+#    width: 140px; padding-right: 6px; }
+#table.todo-list { border: 2px solid #ccc; }
+#table.todo-list tr.row1 { background-color: #eee; color: #555; }
+#table.todo-list tr.row1 td { border-bottom: 2px solid #ccc; }
+#table.todo-list tr:last-child.row1 td { border-bottom: none; }
+#table.todo-list th { background-color: #ddd; padding: 3px; 
+#    font-weight: normal; border: 1px solid #ccc; color: #444; }
+#table.todo-list tr td { color: #666; }
+#table.todo-simple-list tr td { border: none; padding: 4px; }
+#.todo-category-text { color: #666; border-bottom: 1px solid #ccc; }
+#.todo-description-text { color: #444; }
+#.todo-overdue-text { color: #f66; border-bottom: 1px solid #ccc; }
+#.todo-completed-text { color: #446600; border-bottom: 1px solid #ccc; }
+#.todo-legend { text-align: center; color: #555; font-size: smaller; }
+#EOT;

@@ -34,7 +34,7 @@ XLPage('de','PmWikiDe.XLPage');
 ##  to PmWiki. 
 
 ##  $WikiTitle is the name that appears in the browser's title bar.
-$WikiTitle = 'PraxisUnion intern (Docker)';
+$WikiTitle = 'Praxis Schoenbucher intern';
 
 ##  If you want to use URLs of the form .../pmwiki.php/Group/PageName
 ##  instead of .../pmwiki.php?p=Group.PageName, try setting
@@ -51,7 +51,7 @@ $PageLogoUrl = "$PubDirUrl/skins/logo/1b.jpg";
 ## If you want to have a custom skin, then set $Skin to the name
 ## of the directory (in pub/skins/) that contains your skin files.
 ## See PmWiki.Skins and Cookbook.Skins.
-$Skin = 'sbu';
+#$Skin = 'sbu';
 
 ## You'll probably want to set an administrative password that you
 ## can use to get into password-protected pages.  Also, by default 

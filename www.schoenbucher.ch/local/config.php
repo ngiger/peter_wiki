@@ -31,7 +31,7 @@ include_once($FarmD.'cookbook/includeurl.php');                     // erlaubt f
 ##  to PmWiki.  
 
 ##  $WikiTitle is the name that appears in the browser's title bar.
-$WikiTitle = 'Hausarztpraxis Union (Docker)';
+$WikiTitle = 'Psychosomatische Praxis Schönbucher';
 
 ##  If you want to use URLs of the form .../pmwiki.php/Group/PageName
 ##  instead of .../pmwiki.php?p=Group.PageName, try setting
@@ -61,25 +61,25 @@ $DefaultPasswords['read']='';
 
 ##  PmWiki comes with graphical user interface buttons for editing;
 ##  to enable these buttons, set $EnableGUIButtons to 1.  
- $EnableGUIButtons = 1;
+$EnableGUIButtons = 1;
 
 ##  If you want uploads enabled on your system, set $EnableUpload=1.
 ##  You'll also need to set a default upload password, or else set
 ##  passwords on individual groups and pages.  For more information
 ##  see PmWiki.UploadsAdmin.
- $EnableUpload = 1;                       
-  $DefaultPasswords['upload']='$1$4BRUcfDA$Mk1MVvSOj3gLp7ekVoPNf0';
+$EnableUpload = 1;                       
+$DefaultPasswords['upload']='$1$4BRUcfDA$Mk1MVvSOj3gLp7ekVoPNf0';
 
 ##  Setting $EnableDiag turns on the ?action=diag and ?action=phpinfo
 ##  actions, which often helps the PmWiki authors to troubleshoot 
 ##  various configuration and execution problems.
-  $EnableDiag = 1;                         # enable remote diagnostics
+$EnableDiag = 1;                         # enable remote diagnostics
 
 ##  By default, PmWiki doesn't allow browsers to cache pages.  Setting
 ##  $EnableIMSCaching=1; will re-enable browser caches in a somewhat
 ##  smart manner.  Note that you may want to have caching disabled while
 ##  adjusting configuration files or layout templates.
- $EnableIMSCaching = 1;                   # allow browser caching
+$EnableIMSCaching = 1;                   # allow browser caching
 
 ##  Set $SpaceWikiWords if you want WikiWords to automatically 
 ##  have spaces before each sequence of capital letters.
@@ -119,7 +119,7 @@ $DefaultPasswords['read']='';
 ## contents) of read-protected pages in search results and
 ## page listings.  Set $EnablePageListProtect to keep read-protected
 ## pages from appearing in search results.
- $EnablePageListProtect = 1;
+$EnablePageListProtect = 1;
 
 ##  The refcount.php script enables ?action=refcount, which helps to
 ##  find missing and orphaned pages.  See PmWiki.RefCount.
@@ -143,7 +143,7 @@ Markup("'*", "inline", "/'\\*(.*?)\\*'/", "<b>$1</b>");    # '*bold*'
 ##  are turned into links, uncomment the line below.  See PmWiki.UrlApprovals.
 ##  Also, setting $UnapprovedLinkCountMax limits the number of unapproved
 ##  links that are allowed in a page (useful to control wikispam).
-# include_once($FarmD.'scripts/urlapprove.php');
+#include_once($FarmD.'scripts/urlapprove.php');
 # $UnapprovedLinkCountMax = 10;
 
 ##  The following lines make additional editing buttons appear in the
