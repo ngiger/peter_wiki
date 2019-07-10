@@ -9,6 +9,7 @@ Description=Daemon for PmWiki von Iatrix
 After=network.target docker.service 
 Wants=
 Requires=docker.service
+Requires=apache2.service
 
 [Service]
 Type=oneshot
